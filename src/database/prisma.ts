@@ -1,0 +1,20 @@
+import { Pool } from "pg";
+import { envConfig } from "../config/env.config";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "../../generated/prisma/client";
+
+const pool = new Pool({
+  connectionString: envConfig.DATABASE_URL,
+});
+
+const adapter = new PrismaPg(pool);
+
+const globalForPrisma = global as unknown as { prisma?: PrismaClient };
+
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    adapter,
+  });
+
+export default prisma;
