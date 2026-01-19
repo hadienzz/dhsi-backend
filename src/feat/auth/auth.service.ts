@@ -1,101 +1,95 @@
 import bcrypt from "bcrypt";
-import prisma from "../../database/prisma";
 import { APIError } from "../../middleware/error.middleware";
 import {
-	generateAccessToken,
-	generateRefreshToken,
+  generateAccessToken,
+  generateRefreshToken,
 } from "../../utils/token.util";
 import {
-	revokeAllUserRefreshTokens,
-	saveRefreshToken,
+  createUser,
+  findUserByEmail,
+  revokeAllUserRefreshTokens,
+  saveRefreshToken,
 } from "./auth.repository";
 
 interface RegisterInput {
-	name: string;
-	email: string;
-	password: string;
+  username: string;
+  email: string;
+  password: string;
+  phone: string;
 }
 
 interface LoginInput {
-	email: string;
-	password: string;
+  email: string;
+  password: string;
 }
 
 const REFRESH_TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 const issueTokensForUser = async (userId: string, email: string) => {
-	const payload = { userId, email };
+  const payload = { userId, email };
 
-	const accessToken = generateAccessToken(payload);
-	const refreshToken = generateRefreshToken(payload);
+  const accessToken = generateAccessToken(payload);
+  const refreshToken = generateRefreshToken(payload);
 
-	await revokeAllUserRefreshTokens(userId);
-	await saveRefreshToken(
-		userId,
-		refreshToken,
-		new Date(Date.now() + REFRESH_TOKEN_TTL_MS),
-	);
+  await revokeAllUserRefreshTokens(userId);
+  await saveRefreshToken(
+    userId,
+    refreshToken,
+    new Date(Date.now() + REFRESH_TOKEN_TTL_MS)
+  );
 
-	return { accessToken, refreshToken };
+  return { accessToken, refreshToken };
 };
 
 export const registerUserService = async (input: RegisterInput) => {
-	const { name, email, password } = input;
+  const { username, email, password, phone } = input;
 
-	const existing = await prisma.user.findFirst({
-		where: {
-			OR: [{ email }, { username: name }],
-		},
-	});
+  const existing = await findUserByEmail(email);
 
-	if (existing) {
-		throw new APIError("User with this email or name already exists", 400);
-	}
+  if (existing) {
+    throw new APIError("User with this email already exists", 400);
+  }
 
-	const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-	const user = await prisma.user.create({
-		data: {
-			username: name,
-			email,
-			password: hashedPassword,
-		},
-	});
+  const user = await createUser({
+    username,
+    email,
+    password: hashedPassword,
+    phone,
+  });
 
-	const tokens = await issueTokensForUser(user.id, user.email);
+  const tokens = await issueTokensForUser(user.id, user.email);
 
-	const { password: _pw, ...safeUser } = user;
+  const { password: _pw, ...safeUser } = user;
 
-	return {
-		user: safeUser,
-		...tokens,
-	};
+  return {
+    user: safeUser,
+    ...tokens,
+  };
 };
 
 export const loginUserService = async (input: LoginInput) => {
-	const { email, password } = input;
+  const { email, password } = input;
 
-	const user = await prisma.user.findUnique({
-		where: { email },
-	});
+  const user = await findUserByEmail(email);
 
-	if (!user) {
-		throw new APIError("Invalid email or password", 401);
-	}
+  if (!user) {
+    throw new APIError("Invalid email or password", 401);
+  }
 
-	const isValid = await bcrypt.compare(password, user.password);
+  const isValid = await bcrypt.compare(password, user.password);
 
-	if (!isValid) {
-		throw new APIError("Invalid email or password", 401);
-	}
+  if (!isValid) {
+    throw new APIError("Invalid email or password", 401);
+  }
 
-	const tokens = await issueTokensForUser(user.id, user.email);
+  const tokens = await issueTokensForUser(user.id, user.email);
 
-	const { password: _pw, ...safeUser } = user;
+  const { password: _pw, ...safeUser } = user;
 
-	return {
-		user: safeUser,
-		...tokens,
-	};
+  return {
+    user: safeUser,
+    ...tokens,
+  };
 };
-

@@ -23,72 +23,85 @@ declare module "express-serve-static-core" {
 export const verifyToken = async (
   req: Request,
   res: Response<APIResponse>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const accessToken =
-      req.cookies?.accessToken ||
-      (req.headers["authorization"]?.toString().startsWith("Bearer ")
-        ? req.headers["authorization"]!.toString().slice(7)
+      req.cookies?.accessToken ??
+      (req.headers.authorization?.startsWith("Bearer ")
+        ? req.headers.authorization.slice(7)
         : undefined);
 
-    if (!accessToken) {
-      throw new APIError("Unauthorized", 401);
-    }
+    /**
+     * =========================
+     * 1. COBA ACCESS TOKEN
+     * =========================
+     */
+    if (accessToken) {
+      try {
+        const accessPayload = verifyAccessToken(accessToken);
 
-    let payload;
-    try {
-      payload = verifyAccessToken(accessToken);
-    } catch (err) {
-      // Jika access token expired, coba pakai refresh token
-      if (err instanceof jwt.TokenExpiredError) {
-        const refreshToken = req.cookies?.refreshToken;
+        const user = await prisma.user.findUnique({
+          where: { id: accessPayload.userId },
+          select: { id: true, username: true, email: true },
+        });
 
-        if (!refreshToken) {
+        if (!user) {
           throw new APIError("Unauthorized", 401);
         }
 
-        // Verifikasi JWT refresh token
-        const refreshPayload = verifyRefreshToken(refreshToken);
-
-        // Pastikan refresh token masih valid di DB dan belum direvoke/expired
-        const stored = await findRefreshToken(refreshToken);
-        if (
-          !stored ||
-          stored.revoked_at !== null ||
-          stored.expires_at <= new Date()
-        ) {
-          throw new APIError("Unauthorized", 401);
+        req.user = user;
+        return next();
+      } catch (err) {
+        // kalau error SELAIN expired → langsung lanjut ke refresh
+        if (!(err instanceof jwt.TokenExpiredError)) {
+          throw err;
         }
-
-        // Generate access token baru dan set ke cookie
-        const newAccessToken = generateAccessToken({
-          userId: refreshPayload.userId,
-          email: refreshPayload.email,
-        });
-
-        res.cookie("accessToken", newAccessToken, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "lax",
-          maxAge: 15 * 60 * 1000,
-          path: "/",
-        });
-
-        payload = refreshPayload;
-      } else {
-        // Error lain -> unauthorized
-        throw new APIError("Unauthorized", 401);
       }
     }
 
+    /**
+     * =========================
+     * 2. FALLBACK KE REFRESH TOKEN
+     * =========================
+     */
+    const refreshToken = req.cookies?.refreshToken;
+    if (!refreshToken) {
+      throw new APIError("Unauthorized", 401);
+    }
+
+    const refreshPayload = verifyRefreshToken(refreshToken);
+
+    const storedToken = await findRefreshToken(refreshToken);
+    if (
+      !storedToken ||
+      storedToken.revoked_at !== null ||
+      storedToken.expires_at <= new Date()
+    ) {
+      throw new APIError("Unauthorized", 401);
+    }
+
+    /**
+     * =========================
+     * 3. GENERATE ACCESS TOKEN BARU
+     * =========================
+     */
+    const newAccessToken = generateAccessToken({
+      userId: refreshPayload.userId,
+      email: refreshPayload.email,
+    });
+
+    res.cookie("accessToken", newAccessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 15 * 60 * 1000,
+      path: "/",
+    });
+
     const user = await prisma.user.findUnique({
-      where: { id: payload.userId },
-      select: {
-        id: true,
-        username: true,
-        email: true,
-      },
+      where: { id: refreshPayload.userId },
+      select: { id: true, username: true, email: true },
     });
 
     if (!user) {
@@ -96,7 +109,7 @@ export const verifyToken = async (
     }
 
     req.user = user;
-    next();
+    return next();
   } catch (error) {
     if (error instanceof APIError) {
       return next(error);

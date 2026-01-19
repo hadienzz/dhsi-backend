@@ -20,10 +20,11 @@ enum StatusWorkshops {
 }
 
 model User {
-  id       String @id @default(uuid())
-  username String @unique
-  email    String @unique
+  id       String  @id @default(uuid())
+  email    String  @unique
+  username String
   password String
+  phone    String?
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -121,7 +122,7 @@ model RefreshToken {
   id      String @id @default(uuid())
   user_id String
 
-  token      String   @unique
+  token      String    @unique
   expires_at DateTime
   revoked_at DateTime?
 

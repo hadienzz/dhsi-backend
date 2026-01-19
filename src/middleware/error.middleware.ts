@@ -16,9 +16,10 @@ export const errorHandler = (
   req: Request,
   res: Response<APIResponse>,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  next: NextFunction,
+  next: NextFunction
 ) => {
-  res.status(err.statusCode || 500).json({
+  console.log(err.message);
+  return res.status(err.statusCode || 500).json({
     status: "error",
     message: err.message || "Internal Server Error",
   });

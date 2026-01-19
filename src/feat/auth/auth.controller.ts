@@ -3,10 +3,7 @@ import { APIResponse } from "../../utils/response.util";
 import z from "zod";
 import { loginSchema, registerSchema } from "./auth.schema";
 import { clearAuthCookies, setAuthCookies } from "../../utils/token.util";
-import {
-  loginUserService,
-  registerUserService,
-} from "./auth.service";
+import { loginUserService, registerUserService } from "./auth.service";
 import { revokeRefreshToken } from "./auth.repository";
 
 const registerUser = async (
@@ -15,13 +12,15 @@ const registerUser = async (
   next: NextFunction
 ) => {
   try {
-    const { email, name, password } = req.body as z.infer<
+    const { email, username, password, phone } = req.body as z.infer<
       typeof registerSchema
     >;
+    
     const { user, accessToken, refreshToken } = await registerUserService({
       email,
-      name,
+      username,
       password,
+      phone,
     });
 
     setAuthCookies(res, accessToken, refreshToken);
@@ -39,7 +38,7 @@ const registerUser = async (
 const loginUser = async (
   req: Request,
   res: Response<APIResponse>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { email, password } = req.body as z.infer<typeof loginSchema>;
@@ -54,7 +53,7 @@ const loginUser = async (
     res.status(200).json({
       status: "success",
       message: "Login successful",
-      data: { user },
+      data: user,
     });
   } catch (error) {
     next(error);
@@ -64,7 +63,7 @@ const loginUser = async (
 const me = async (
   req: Request,
   res: Response<APIResponse>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     if (!req.user) {
@@ -87,23 +86,21 @@ const me = async (
 const logout = async (
   req: Request,
   res: Response<APIResponse>,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const refreshToken = req.cookies?.refreshToken;
 
     if (refreshToken) {
-      // Revoke refresh token di database jika ada
       await revokeRefreshToken(refreshToken).catch(() => undefined);
     }
 
-  // Hapus access & refresh token dari cookie
-  clearAuthCookies(res);
+    clearAuthCookies(res);
 
-  res.status(200).json({
-    status: "success",
-    message: "Logged out successfully",
-  });
+    res.status(200).json({
+      status: "success",
+      message: "Logged out successfully",
+    });
   } catch (error) {
     next(error);
   }

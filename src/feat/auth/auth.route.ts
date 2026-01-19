@@ -12,11 +12,7 @@ router.post(
   authController.registerUser
 );
 
-router.post(
-  "/login",
-  validate(loginSchema, "body"),
-  authController.loginUser,
-);
+router.post("/login", validate(loginSchema, "body"), authController.loginUser);
 
 router.get("/me", verifyToken, authController.me);
 
