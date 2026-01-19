@@ -14,6 +14,7 @@ interface EnvConfig {
   DATABASE_URL: string;
   ACCESS_TOKEN_SECRET: string;
   REFRESH_TOKEN_SECRET: string;
+  DIRECT_URL: string;
 }
 
 export const envConfig: EnvConfig = {
@@ -21,4 +22,5 @@ export const envConfig: EnvConfig = {
   DATABASE_URL: requireEnv("DATABASE_URL"),
   ACCESS_TOKEN_SECRET: requireEnv("JWT_ACCESS_SECRET"),
   REFRESH_TOKEN_SECRET: requireEnv("JWT_REFRESH_SECRET"),
+  DIRECT_URL: requireEnv("DIRECT_URL"),
 };
