@@ -1,4 +1,3 @@
-import { envConfig } from "./config/env.config";
 import app from "./app";
 
 app.listen(3001, () => {
