@@ -16,6 +16,7 @@ declare module "express-serve-static-core" {
       id: string;
       username: string;
       email: string;
+      role: string;
     };
   }
 }
@@ -23,7 +24,7 @@ declare module "express-serve-static-core" {
 export const verifyToken = async (
   req: Request,
   res: Response<APIResponse>,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const accessToken =
@@ -43,7 +44,7 @@ export const verifyToken = async (
 
         const user = await prisma.user.findUnique({
           where: { id: accessPayload.userId },
-          select: { id: true, username: true, email: true },
+          select: { id: true, username: true, email: true, role: true },
         });
 
         if (!user) {
@@ -101,7 +102,7 @@ export const verifyToken = async (
 
     const user = await prisma.user.findUnique({
       where: { id: refreshPayload.userId },
-      select: { id: true, username: true, email: true },
+      select: { id: true, username: true, email: true, role: true },
     });
 
     if (!user) {

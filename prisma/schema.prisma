@@ -19,12 +19,18 @@ enum StatusWorkshops {
   completed
 }
 
+enum Role {
+  admin
+  user
+}
+
 model User {
   id       String  @id @default(uuid())
   email    String  @unique
   username String
   password String
   phone    String?
+  role     Role    @default(user)
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
