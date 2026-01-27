@@ -35,39 +35,36 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  workshops          Workshop[]         @relation("author_workshops")
   selected_workshops SelectedWorkshop[]
   workshop_ratings   WorkshopRating[]
 
   refresh_tokens RefreshToken[]
+  workshops      Workshop[]
 
   @@map("users")
 }
 
 model Workshop {
-  id            String   @id @default(uuid())
-  author_id     String
-  collaborators String[] // array of string sesuai desain kamu
+  id String @id @default(uuid())
 
-  title       String
-  price       Float
-  description String
-  start_date  DateTime
-  end_date    DateTime
-  status      StatusWorkshops
+  title             String
+  description       String
+  thumbnail         String
+  benefits           String[]
+  category          String
+  // level             String
+  short_description String
+  price             Decimal  @db.Decimal(10, 2)
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  author         User               @relation("author_workshops", fields: [author_id], references: [id])
   modules        WorkshopModule[]
   selected_users SelectedWorkshop[]
   ratings        WorkshopRating[]
+  user           User?              @relation(fields: [user_id], references: [id])
+  user_id         String?
 
-  @@index([author_id])
-  @@index([status])
-  @@index([author_id, status])
-  @@index([start_date])
   @@map("workshops")
 }
 

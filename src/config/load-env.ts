@@ -11,16 +11,20 @@ const requireEnv = (key: string): string => {
 
 interface EnvConfig {
   PORT: number;
-  DATABASE_URL: string;
+  DATABASE_SESSION_POOLER: string;
   ACCESS_TOKEN_SECRET: string;
   REFRESH_TOKEN_SECRET: string;
-  DIRECT_URL: string;
+  DATABASE_DIRECT_URL: string;
+  SUPABASE_URL: string;
+  SUPABASE_ANON_KEY: string;
 }
 
 export const envConfig: EnvConfig = {
   PORT: Number(requireEnv("PORT")),
-  DATABASE_URL: requireEnv("DATABASE_URL"),
+  DATABASE_SESSION_POOLER: requireEnv("DATABASE_SESSION_POOLER"),
   ACCESS_TOKEN_SECRET: requireEnv("JWT_ACCESS_SECRET"),
   REFRESH_TOKEN_SECRET: requireEnv("JWT_REFRESH_SECRET"),
-  DIRECT_URL: requireEnv("DIRECT_URL"),
+  DATABASE_DIRECT_URL: requireEnv("DATABASE_DIRECT_URL"),
+  SUPABASE_URL: requireEnv("SUPABASE_URL"),
+  SUPABASE_ANON_KEY: requireEnv("SUPABASE_ANON_KEY"),
 };
