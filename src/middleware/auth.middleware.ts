@@ -116,6 +116,8 @@ export const verifyToken = async (
       return next(error);
     }
 
-    return next(new APIError("Unauthorized", 401));
+    console.error("Verify token error:", error);
+
+    return next(new APIError("Authentication failed", 500));
   }
 };

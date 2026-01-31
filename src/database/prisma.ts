@@ -4,7 +4,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../../generated/prisma/client";
 
 const pool = new Pool({
-  connectionString: envConfig.DATABASE_URL,
+  connectionString: envConfig.DATABASE_SESSION_POOLER,
 });
 
 const adapter = new PrismaPg(pool);

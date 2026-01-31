@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { APIResponse } from "../utils/response.util";
+import type { APIResponse } from "../utils/response.util";
 
 export class APIError extends Error {
   statusCode: number | undefined;
@@ -18,8 +18,13 @@ export const errorHandler = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction
 ) => {
-  console.log(err.message);
-  return res.status(err.statusCode || 500).json({
+  // eslint-disable-next-line no-console
+  console.error('[errorHandler]', {
+    name: err.name,
+    message: err.message,
+    stack: err.stack,
+  });
+  res.status(err.statusCode || 500).json({
     status: "error",
     message: err.message || "Internal Server Error",
   });

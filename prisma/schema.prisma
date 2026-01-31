@@ -24,6 +24,13 @@ enum Role {
   user
 }
 
+enum PaymentStatus {
+  PENDING
+  SETTLEMENT
+  CANCEL
+  EXPIRE
+}
+
 model User {
   id       String  @id @default(uuid())
   email    String  @unique
@@ -35,39 +42,40 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  workshops          Workshop[]         @relation("author_workshops")
   selected_workshops SelectedWorkshop[]
   workshop_ratings   WorkshopRating[]
 
   refresh_tokens RefreshToken[]
+  workshops      Workshop[]
+  workshop_payments WorkshopPayment[]
 
   @@map("users")
 }
 
 model Workshop {
-  id            String   @id @default(uuid())
-  author_id     String
-  collaborators String[] // array of string sesuai desain kamu
+  id String @id @default(uuid())
 
-  title       String
-  price       Float
-  description String
-  start_date  DateTime
-  end_date    DateTime
-  status      StatusWorkshops
+  title             String
+  description       String
+  thumbnail         String
+  benefits          String[]
+  category          String
+  // level             String
+  short_description String
+  price             Decimal  @db.Decimal(10, 2)
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  deleted_at DateTime?
 
-  author         User               @relation("author_workshops", fields: [author_id], references: [id])
   modules        WorkshopModule[]
   selected_users SelectedWorkshop[]
   ratings        WorkshopRating[]
+  user           User?              @relation(fields: [user_id], references: [id])
+  user_id        String?
 
-  @@index([author_id])
-  @@index([status])
-  @@index([author_id, status])
-  @@index([start_date])
+  workshop_payments WorkshopPayment[]
+
   @@map("workshops")
 }
 
@@ -75,10 +83,24 @@ model WorkshopModule {
   id          String @id @default(uuid())
   workshop_id String
 
-  title        String
-  description  String
-  video_url    String?
-  content_text String
+  title String
+  type  String
+
+  // Tanggal jadwal modul (digunakan di halaman admin & siswa)
+  schedule_at DateTime
+
+  // Konten modul berdasarkan tipe
+  youtube_url        String?
+  zoom_url           String?
+  whatsapp_group_url String?
+  exam_form_url      String?
+
+  // Field lama diset opsional untuk kompatibilitas ke depan
+  description  String?
+  content_text String?
+
+  // Urutan modul dalam satu workshop
+  order Int
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -140,4 +162,26 @@ model RefreshToken {
   @@index([user_id])
   @@index([expires_at])
   @@map("refresh_tokens")
+}
+
+model WorkshopPayment {
+  id              String         @id @default(uuid())
+  user_id         String
+  workshop_id     String
+  order_id        String         @unique
+  transaction_token String
+  redirect_url    String
+  amount          Decimal        @db.Decimal(10, 2)
+  status          PaymentStatus  @default(PENDING)
+  idempotency_key String         @unique
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user     User     @relation(fields: [user_id], references: [id])
+  workshop Workshop @relation(fields: [workshop_id], references: [id])
+
+  @@index([user_id])
+  @@index([workshop_id])
+  @@map("workshop_payments")
 }
