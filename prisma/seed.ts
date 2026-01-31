@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { envConfig } from "../src/config/load-env";
 
 const pool = new Pool({
-  connectionString: envConfig.DATABASE_URL,
+  connectionString: envConfig.DATABASE_DIRECT_URL,
 });
 
 const adapter = new PrismaPg(pool);

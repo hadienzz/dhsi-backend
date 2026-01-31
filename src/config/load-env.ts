@@ -17,6 +17,8 @@ interface EnvConfig {
   DATABASE_DIRECT_URL: string;
   SUPABASE_URL: string;
   SUPABASE_ANON_KEY: string;
+  MIDTRANS_SERVER_KEY: string;
+  MIDTRANS_CLIENT_KEY: string;
 }
 
 export const envConfig: EnvConfig = {
@@ -27,4 +29,6 @@ export const envConfig: EnvConfig = {
   DATABASE_DIRECT_URL: requireEnv("DATABASE_DIRECT_URL"),
   SUPABASE_URL: requireEnv("SUPABASE_URL"),
   SUPABASE_ANON_KEY: requireEnv("SUPABASE_ANON_KEY"),
+  MIDTRANS_SERVER_KEY: requireEnv("MIDTRANS_SERVER_KEY"),
+  MIDTRANS_CLIENT_KEY: requireEnv("MIDTRANS_CLIENT_KEY"),
 };
