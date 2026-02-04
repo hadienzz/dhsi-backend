@@ -11,6 +11,10 @@ router.post(
   workshopController.createWorkshopPayment,
 );
 
-router.delete("/:workshopId/delete",verifyToken,workshopController.deleteWorkshop);
+router.delete(
+  "/:workshopId/delete",
+  verifyToken,
+  workshopController.deleteWorkshop,
+);
 
 export default router;

@@ -79,5 +79,5 @@ export const deleteWorkshop = async (
 
 export const workshopController = {
   createWorkshopPayment,
-  deleteWorkshop
+  deleteWorkshop,
 };
