@@ -11,7 +11,7 @@ import { APIResponse } from "../utils/response.util";
 import { findRefreshToken } from "../feat/auth/auth.repository";
 
 declare module "express-serve-static-core" {
-  interface Request {
+  export interface Request {
     user?: {
       id: string;
       username: string;
