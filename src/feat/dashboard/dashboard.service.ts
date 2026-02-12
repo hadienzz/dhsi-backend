@@ -61,7 +61,7 @@ const getWorkshopModules = async (workshopId: string) => {
 };
 
 const getWorkshops = async () => {
-  return workshopRepository.getWorkshops()
+  return workshopRepository.getWorkshops();
 };
 
 const getWorkshopDetail = async (id: string) => {
@@ -87,9 +87,9 @@ const getWorkshopDetail = async (id: string) => {
     category: workshop.category,
     thumbnail: workshop.thumbnail,
     benefits: workshop.benefits,
-    price: toNumber(workshop.price),
+    credit_price: workshop.credit_price,
     created_at: workshop.created_at.toISOString(),
-    updated_at: workshop.updated_at.toISOString(),
+    updated_at: workshop?.updated_at?.toISOString(),
     modules: workshop.modules.map((module) => ({
       id: module.id,
       title: module.title,

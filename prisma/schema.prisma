@@ -106,7 +106,7 @@ model Workshop {
 
   short_description String
 
-  credit_price Int?
+  credit_price Int
 
   user_id String @db.Uuid
 

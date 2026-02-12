@@ -120,10 +120,7 @@ const getWorkshopDetail = async (id: string) => {
   });
 };
 
-const deleteWorkshopModule = async (
-  workshopId: string,
-  moduleId: string,
-) => {
+const deleteWorkshopModule = async (workshopId: string, moduleId: string) => {
   return prisma.workshopModule.deleteMany({
     where: {
       id: moduleId,

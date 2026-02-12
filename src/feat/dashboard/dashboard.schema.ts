@@ -13,7 +13,7 @@ export const createWorkshopSchema = z.object({
   ),
   category: z.string(),
   description: z.string(),
-  price: z.string(),
+  credit_price: z.coerce.number(),
 });
 
 const moduleTypeEnum = z.enum([

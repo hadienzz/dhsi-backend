@@ -71,7 +71,7 @@ const createWorkshopPayment = async (input: CreateWorkshopPaymentInput) => {
 
   const transaction = await snap.createTransaction(transactionParams);
 
-  const payment = await prisma.workshopPayment.create({
+  const payment = await prisma.packagePayment.create({
     data: {
       user_id: userId,
       workshop_id: workshop.id,

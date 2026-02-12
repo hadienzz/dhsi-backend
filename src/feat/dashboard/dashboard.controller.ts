@@ -14,8 +14,14 @@ const createWorkshop = async (
   next: NextFunction,
 ) => {
   try {
-    const { category, short_description, title, benefits, description, price } =
-      req.body as z.infer<typeof createWorkshopSchema>;
+    const {
+      category,
+      short_description,
+      title,
+      benefits,
+      description,
+      credit_price,
+    } = req.body as z.infer<typeof createWorkshopSchema>;
     const user_id = req.user?.id as string;
     const files = req.files as
       | { [fieldname: string]: Express.Multer.File[] }
@@ -30,7 +36,7 @@ const createWorkshop = async (
       thumbnail: "",
       benefits,
       description,
-      price: Number(price),
+      credit_price,
       user_id,
     };
 
