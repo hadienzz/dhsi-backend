@@ -6,6 +6,6 @@ export type createWorkshopPayload = {
   benefits: string[];
   category: string;
   // level: string;
-  price: number;
+  credit_price: number;
   user_id: string;
 };
