@@ -6,6 +6,15 @@ const getPackets = async () => {
   return packets;
 };
 
+const getPacketById = async (id: string) => {
+  const packet = await prisma.pricingPackage.findUnique({
+    where: { id },
+  });
+
+  return packet;
+};
+
 export const packetRepository = {
   getPackets,
+  getPacketById,
 };

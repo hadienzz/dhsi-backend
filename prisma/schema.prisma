@@ -12,6 +12,7 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
 ////////////////////////////////
 // ENUMS
 ////////////////////////////////
@@ -46,41 +47,41 @@ enum CreditTransactionType {
 ////////////////////////////////
 
 model User {
-  id        String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-  email     String @unique
-  username  String
-  password  String
-  phone     String?
+  email    String  @unique
+  username String
+  password String
+  phone    String?
 
-  role      Role   @default(user)
+  role Role @default(user)
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime?
 
-  refresh_tokens RefreshToken[]
-  workshops      Workshop[]
+  refresh_tokens     RefreshToken[]
+  workshops          Workshop[]
   selected_workshops SelectedWorkshop[]
-  workshop_ratings  WorkshopRating[]
-  liked_workshops   LikedWorkshop[]
+  workshop_ratings   WorkshopRating[]
+  liked_workshops    LikedWorkshop[]
 
-  wallet             UserWallet?
-  credit_transactions CreditTransaction[]
-  package_payments    PackagePayment[]
+  wallet                    UserWallet?
+  credit_transactions       CreditTransaction[]
+  package_payments          PackagePayment[]
   workshop_credit_purchases WorkshopCreditPurchase[]
 
   @@map("users")
 }
 
 model RefreshToken {
-  id         String @id @default(uuid()) @db.Uuid
-  user_id   String @db.Uuid
+  id      String @id @default(uuid()) @db.Uuid
+  user_id String @db.Uuid
 
-  token      String @unique
+  token      String    @unique
   expires_at DateTime
   revoked_at DateTime?
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime?
 
   user User @relation(fields: [user_id], references: [id])
@@ -110,7 +111,7 @@ model Workshop {
 
   user_id String @db.Uuid
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime?
   deleted_at DateTime?
 
@@ -145,7 +146,7 @@ model WorkshopModule {
 
   order Int
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime?
 
   workshop Workshop @relation(fields: [workshop_id], references: [id])
@@ -159,7 +160,7 @@ model SelectedWorkshop {
   user_id     String @db.Uuid
   workshop_id String @db.Uuid
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime?
 
   user     User     @relation(fields: [user_id], references: [id])
@@ -180,7 +181,7 @@ model WorkshopRating {
   rating Int
   review String?
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime?
 
   user     User     @relation(fields: [user_id], references: [id])
@@ -197,7 +198,7 @@ model LikedWorkshop {
   user_id     String @db.Uuid
   workshop_id String @db.Uuid
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime?
 
   user     User     @relation(fields: [user_id], references: [id])
@@ -216,9 +217,9 @@ model UserWallet {
   id String @id @default(uuid()) @db.Uuid
 
   user_id String @unique @db.Uuid
-  balance Int @default(0)
+  balance Int    @default(0)
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime?
 
   user User @relation(fields: [user_id], references: [id])
@@ -258,7 +259,7 @@ model PricingPackage {
   id String @id @default(uuid()) @db.Uuid
 
   package_id String @unique
-  name String
+  name       String
 
   price Decimal @db.Decimal(10, 2)
 
@@ -291,14 +292,13 @@ model PackagePayment {
   order_id String @unique
 
   transaction_token String?
-  redirect_url      String?
 
   amount Decimal @db.Decimal(10, 2)
 
-  status PaymentStatus @default(PENDING)
-  idempotency_key String? @unique
+  status          PaymentStatus @default(PENDING)
+  idempotency_key String?       @unique
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
   updated_at DateTime?
 
   user    User           @relation(fields: [user_id], references: [id])
