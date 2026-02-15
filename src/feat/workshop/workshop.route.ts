@@ -5,10 +5,11 @@ import { workshopController } from "./workshop.controller";
 const router = Router();
 
 // Public checkout route for workshop (requires authenticated user, not necessarily admin)
+
 router.post(
-  "/:id/checkout",
+  "/buy-workshop",
   verifyToken,
-  workshopController.createWorkshopPayment,
+  workshopController.buyWorkshopWithCredits,
 );
 
 router.delete(

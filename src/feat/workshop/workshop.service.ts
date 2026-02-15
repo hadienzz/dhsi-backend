@@ -1,94 +1,14 @@
 import prisma from "../../database/prisma";
 import { APIError } from "../../middleware/error.middleware";
 import { snap } from "../../lib/midtrans";
-
-type CreateWorkshopPaymentInput = {
-  workshopId: string;
-  userId: string;
-  userEmail: string;
-  userName: string;
-  idempotencyKey: string;
-};
+import { BuyWorkshopWithCreditsPayload } from "../../types/types";
+import { workshopRepository } from "./workshop.repository";
+import { walletRepository } from "../wallet/wallet.repository";
 
 type SoftDeleteWorkshopInput = {
   workshopId: string;
   userId: string;
   userRole: string;
-};
-
-const createWorkshopPayment = async (input: CreateWorkshopPaymentInput) => {
-  const { workshopId, userId, userEmail, userName, idempotencyKey } = input;
-
-  // If this idempotency key already used, return existing payment
-  const existing = await prisma.workshopPayment.findUnique({
-    where: { idempotency_key: idempotencyKey },
-  });
-
-  if (existing) {
-    return {
-      orderId: existing.order_id,
-      transactionToken: existing.transaction_token,
-      redirectUrl: existing.redirect_url,
-      idempotencyKey: existing.idempotency_key,
-    };
-  }
-
-  const workshop = await prisma.workshop.findFirst({
-    where: { id: workshopId, deleted_at: null },
-  });
-
-  if (!workshop) {
-    throw new APIError("Workshop not found", 404);
-  }
-
-  const amount = Number(
-    typeof (workshop.price as unknown as any).toString === "function"
-      ? (workshop.price as unknown as any).toString()
-      : workshop.price,
-  );
-
-  const orderId = `${crypto.randomUUID()}-${Date.now()}`;
-
-  const transactionParams: any = {
-    transaction_details: {
-      order_id: orderId,
-      gross_amount: amount,
-    },
-    item_details: [
-      {
-        id: workshop.id,
-        price: amount,
-        quantity: 1,
-        name: workshop.title.substring(0, 50),
-      },
-    ],
-    enabled_payments: ["gopay"],
-    customer_details: {
-      email: userEmail,
-      first_name: userName,
-    },
-  };
-
-  const transaction = await snap.createTransaction(transactionParams);
-
-  const payment = await prisma.packagePayment.create({
-    data: {
-      user_id: userId,
-      workshop_id: workshop.id,
-      order_id: orderId,
-      transaction_token: transaction.token,
-      redirect_url: transaction.redirect_url,
-      amount,
-      idempotency_key: idempotencyKey,
-    },
-  });
-
-  return {
-    orderId: payment.order_id,
-    transactionToken: payment.transaction_token,
-    redirectUrl: payment.redirect_url,
-    idempotencyKey: payment.idempotency_key,
-  };
 };
 
 const softDeleteWorkshop = async (input: SoftDeleteWorkshopInput) => {
@@ -117,7 +37,63 @@ const softDeleteWorkshop = async (input: SoftDeleteWorkshopInput) => {
   });
 };
 
+const buyWorkshopWithCredits = async (
+  payload: BuyWorkshopWithCreditsPayload,
+) => {
+  const selectedWorkshop = await workshopRepository.selectedWorkshop(
+    payload.workshop_id,
+  );
+
+  if (!selectedWorkshop) {
+    throw new APIError("Workshop not found", 404);
+  }
+
+  // Gunakan saldo aktif (kredit yang belum kadaluarsa)
+  const activeBalance = await walletRepository.getActiveBalance(payload.user_id);
+
+  if (activeBalance < selectedWorkshop.credit_price) {
+    throw new APIError("Insufficient credits", 400);
+  }
+
+  await prisma.$transaction(async (tx) => {
+    // Deduct credits
+    await tx.userWallet.update({
+      where: { user_id: payload.user_id },
+      data: {
+        balance: {
+          decrement: selectedWorkshop.credit_price,
+        },
+      },
+    });
+
+    const wallet = await tx.userWallet.findUnique({
+      where: { user_id: payload.user_id },
+      select: { balance: true },
+    });
+
+    await tx.creditTransaction.create({
+      data: {
+        user_id: payload.user_id,
+        type: "PURCHASE_WORKSHOP",
+        amount: selectedWorkshop.credit_price,
+        balance_before: (wallet?.balance ?? 0) + selectedWorkshop.credit_price,
+        balance_after: wallet?.balance ?? 0,
+        description: `Pembelian workshop: ${selectedWorkshop.title}`,
+        reference_id: payload.workshop_id,
+      },
+    });
+
+    await tx.workshopCreditPurchase.create({
+      data: {
+        user_id: payload.user_id,
+        workshop_id: payload.workshop_id,
+        credit_used: selectedWorkshop.credit_price,
+      },
+    });
+  });
+};
+
 export const workshopService = {
-  createWorkshopPayment,
   softDeleteWorkshop,
+  buyWorkshopWithCredits,
 };
