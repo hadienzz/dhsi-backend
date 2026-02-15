@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { APIResponse } from "../../utils/response.util";
+import { APIError } from "../../middleware/error.middleware";
 import { paymentService } from "./payment.service";
 
 const createPayment = async (
@@ -12,7 +13,11 @@ const createPayment = async (
     const name = req.user?.username!;
     const email = req.user?.email!;
     const { package_id } = req.body;
-    const idempotency_key = req.headers["idempotency-key"] as string;
+    const rawKey = req.header("Idempotency-Key")?.trim();
+    if (!rawKey) {
+      throw new APIError("Idempotency-Key header is required", 400);
+    }
+    const idempotency_key = rawKey;
 
     const result = await paymentService.createPayment({
       user_id: user_id,

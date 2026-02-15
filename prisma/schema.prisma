@@ -29,6 +29,14 @@ enum PaymentStatus {
   EXPIRE
 }
 
+enum SnapRequestStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+  UNKNOWN
+}
+
 enum StatusWorkshops {
   upcoming
   ongoing
@@ -242,6 +250,8 @@ model CreditTransaction {
   reference_id String? @db.Uuid
   description  String?
 
+  valid_until DateTime? // tanggal kadaluarsa kredit (untuk TOPUP)
+
   created_at DateTime @default(now())
 
   user User @relation(fields: [user_id], references: [id])
@@ -263,11 +273,11 @@ model PricingPackage {
 
   price Decimal @db.Decimal(10, 2)
 
-  credits Int
-  bonus   Int
-
-  bonus_label String?
-  validity    String?
+  credits       Int
+  bonus         Int
+  validity_days Int? // jumlah hari masa aktif kredit
+  bonus_label   String?
+  validity      String?
 
   description String?
   highlight   String?
@@ -296,14 +306,18 @@ model PackagePayment {
   amount Decimal @db.Decimal(10, 2)
 
   status          PaymentStatus @default(PENDING)
-  idempotency_key String?       @unique
+  idempotency_key String
 
-  created_at DateTime  @default(now())
-  updated_at DateTime?
+  snap_request_status SnapRequestStatus @default(NOT_STARTED)
+  snap_error          String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   user    User           @relation(fields: [user_id], references: [id])
   package PricingPackage @relation(fields: [package_id], references: [id])
 
+  @@unique([user_id, idempotency_key])
   @@index([user_id])
   @@index([package_id])
   @@index([status])
@@ -331,4 +345,15 @@ model WorkshopCreditPurchase {
   @@index([user_id])
   @@index([workshop_id])
   @@map("workshop_credit_purchases")
+}
+
+model ParalegalDHSI {
+  id                     String @id @default(uuid()) @db.Uuid
+  email_address          String @unique
+  nama_lengkap           String
+  sebagai                String
+  upload_foto_formal     String
+  rencana_kantor_wilayah String
+
+  @@map("paralegal_dhsi")
 }

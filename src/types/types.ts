@@ -36,12 +36,7 @@ export interface SnapTransactionPayload {
   };
 }
 
-export type CreateTransactionPayload = {
+export interface BuyWorkshopWithCreditsPayload {
+  workshop_id: string;
   user_id: string;
-  package_id: string;
-  order_id: string;
-  idempotency_key: string;
-  transaction_token: string;
-  status: "PENDING";
-  amount: number;
-};
+}
