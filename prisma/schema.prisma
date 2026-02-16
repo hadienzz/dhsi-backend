@@ -46,6 +46,7 @@ enum StatusWorkshops {
 enum CreditTransactionType {
   TOPUP
   PURCHASE_WORKSHOP
+  CALCULATOR_USAGE
   REFUND
   ADJUSTMENT
 }
@@ -62,23 +63,56 @@ model User {
   password String
   phone    String?
 
-  role Role @default(user)
+  role        Role    @default(user)
+  is_verified Boolean @default(false)
+
+  // Profile fields
+  bio           String?
+  avatar_url    String?
+  address       String?
+  city          String?
+  province      String?
+  postal_code   String?
+  occupation    String?
+  institution   String?
+  date_of_birth DateTime?
 
   created_at DateTime  @default(now())
   updated_at DateTime?
 
-  refresh_tokens     RefreshToken[]
-  workshops          Workshop[]
-  selected_workshops SelectedWorkshop[]
-  workshop_ratings   WorkshopRating[]
-  liked_workshops    LikedWorkshop[]
+  refresh_tokens      RefreshToken[]
+  email_verifications EmailVerification[]
+  workshops           Workshop[]
+  selected_workshops  SelectedWorkshop[]
+  workshop_ratings    WorkshopRating[]
+  liked_workshops     LikedWorkshop[]
 
   wallet                    UserWallet?
   credit_transactions       CreditTransaction[]
   package_payments          PackagePayment[]
   workshop_credit_purchases WorkshopCreditPurchase[]
+  calculatorUsages          CalculatorUsages[]
+  module_progresses         WorkshopModuleProgress[]
 
   @@map("users")
+}
+
+model EmailVerification {
+  id String @id @default(uuid()) @db.Uuid
+
+  user_id String @db.Uuid
+
+  code       String
+  expires_at DateTime
+  used_at    DateTime?
+
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
+  @@index([code])
+  @@map("email_verifications")
 }
 
 model RefreshToken {
@@ -157,9 +191,31 @@ model WorkshopModule {
   created_at DateTime  @default(now())
   updated_at DateTime?
 
-  workshop Workshop @relation(fields: [workshop_id], references: [id])
+  workshop   Workshop                 @relation(fields: [workshop_id], references: [id])
+  progresses WorkshopModuleProgress[]
 
   @@map("workshop_modules")
+}
+
+model WorkshopModuleProgress {
+  id String @id @default(uuid()) @db.Uuid
+
+  user_id   String @db.Uuid
+  module_id String @db.Uuid
+
+  is_completed Boolean   @default(false)
+  completed_at DateTime?
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
+
+  user   User           @relation(fields: [user_id], references: [id])
+  module WorkshopModule @relation(fields: [module_id], references: [id])
+
+  @@unique([user_id, module_id])
+  @@index([user_id])
+  @@index([module_id])
+  @@map("workshop_module_progress")
 }
 
 model SelectedWorkshop {
@@ -250,7 +306,8 @@ model CreditTransaction {
   reference_id String? @db.Uuid
   description  String?
 
-  valid_until DateTime? // tanggal kadaluarsa kredit (untuk TOPUP)
+  valid_until      DateTime? // tanggal kadaluarsa kredit (untuk TOPUP)
+  expired_deducted Boolean   @default(false) // sudah di-deduct dari wallet saat expired?
 
   created_at DateTime @default(now())
 
@@ -356,4 +413,20 @@ model ParalegalDHSI {
   rencana_kantor_wilayah String
 
   @@map("paralegal_dhsi")
+}
+
+model CalculatorUsages {
+  id String @id @default(uuid()) @db.Uuid
+
+  user_id String @db.Uuid
+
+  calculator_type String
+  credit_used     Int
+
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
+
+  @@index([user_id])
+  @@map("calculator_usages")
 }

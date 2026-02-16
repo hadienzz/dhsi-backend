@@ -1,6 +1,5 @@
 import prisma from "../../database/prisma";
 import { APIError } from "../../middleware/error.middleware";
-import { snap } from "../../lib/midtrans";
 import { BuyWorkshopWithCreditsPayload } from "../../types/types";
 import { workshopRepository } from "./workshop.repository";
 import { walletRepository } from "../wallet/wallet.repository";
@@ -9,6 +8,11 @@ type SoftDeleteWorkshopInput = {
   workshopId: string;
   userId: string;
   userRole: string;
+};
+
+type ToggleModuleProgressInput = {
+  userId: string;
+  moduleId: string;
 };
 
 const softDeleteWorkshop = async (input: SoftDeleteWorkshopInput) => {
@@ -48,16 +52,42 @@ const buyWorkshopWithCredits = async (
     throw new APIError("Workshop not found", 404);
   }
 
-  // Gunakan saldo aktif (kredit yang belum kadaluarsa)
-  const activeBalance = await walletRepository.getActiveBalance(payload.user_id);
-
-  if (activeBalance < selectedWorkshop.credit_price) {
-    throw new APIError("Insufficient credits", 400);
+  // Check if already purchased
+  const alreadyOwned = await workshopRepository.checkUserOwnsWorkshop(
+    payload.user_id,
+    payload.workshop_id,
+  );
+  if (alreadyOwned) {
+    throw new APIError("Anda sudah membeli workshop ini", 400);
   }
 
-  await prisma.$transaction(async (tx) => {
+  // Gunakan saldo aktif (kredit yang belum kadaluarsa)
+  const activeBalance = await walletRepository.getActiveBalance(
+    payload.user_id,
+  );
+
+  if (activeBalance < selectedWorkshop.credit_price) {
+    throw new APIError(
+      "Kredit tidak cukup. Silakan top up terlebih dahulu.",
+      400,
+    );
+  }
+
+  const result = await prisma.$transaction(async (tx) => {
+    // Get current balance
+    const wallet = await tx.userWallet.findUnique({
+      where: { user_id: payload.user_id },
+      select: { balance: true },
+    });
+
+    if (!wallet) {
+      throw new APIError("Wallet not found", 404);
+    }
+
+    const balanceBefore = wallet.balance;
+
     // Deduct credits
-    await tx.userWallet.update({
+    const updatedWallet = await tx.userWallet.update({
       where: { user_id: payload.user_id },
       data: {
         balance: {
@@ -66,23 +96,20 @@ const buyWorkshopWithCredits = async (
       },
     });
 
-    const wallet = await tx.userWallet.findUnique({
-      where: { user_id: payload.user_id },
-      select: { balance: true },
-    });
-
+    // Create credit transaction
     await tx.creditTransaction.create({
       data: {
         user_id: payload.user_id,
         type: "PURCHASE_WORKSHOP",
         amount: selectedWorkshop.credit_price,
-        balance_before: (wallet?.balance ?? 0) + selectedWorkshop.credit_price,
-        balance_after: wallet?.balance ?? 0,
+        balance_before: balanceBefore,
+        balance_after: updatedWallet.balance,
         description: `Pembelian workshop: ${selectedWorkshop.title}`,
         reference_id: payload.workshop_id,
       },
     });
 
+    // Create purchase record
     await tx.workshopCreditPurchase.create({
       data: {
         user_id: payload.user_id,
@@ -90,10 +117,68 @@ const buyWorkshopWithCredits = async (
         credit_used: selectedWorkshop.credit_price,
       },
     });
+
+    // Add to selected workshops (user now "owns" the workshop)
+    await tx.selectedWorkshop.create({
+      data: {
+        user_id: payload.user_id,
+        workshop_id: payload.workshop_id,
+      },
+    });
+
+    return {
+      credit_used: selectedWorkshop.credit_price,
+      balance_after: updatedWallet.balance,
+      workshop_title: selectedWorkshop.title,
+    };
   });
+
+  return result;
+};
+
+const toggleModuleProgress = async (input: ToggleModuleProgressInput) => {
+  const { userId, moduleId } = input;
+
+  // Verify module exists
+  const module = await workshopRepository.getModuleById(moduleId);
+  if (!module) {
+    throw new APIError("Modul tidak ditemukan", 404);
+  }
+
+  // Verify user owns the workshop
+  const isOwned = await workshopRepository.checkUserOwnsWorkshop(
+    userId,
+    module.workshop_id,
+  );
+  if (!isOwned) {
+    throw new APIError(
+      "Anda harus membeli workshop ini terlebih dahulu.",
+      403,
+    );
+  }
+
+  // Get current progress (toggle)
+  const currentProgress = await workshopRepository.getModuleProgress(
+    userId,
+    moduleId,
+  );
+  const newStatus = !currentProgress?.is_completed;
+
+  const result = await workshopRepository.upsertModuleProgress(
+    userId,
+    moduleId,
+    newStatus,
+  );
+
+  return {
+    module_id: moduleId,
+    is_completed: result.is_completed,
+    completed_at: result.completed_at,
+  };
 };
 
 export const workshopService = {
   softDeleteWorkshop,
   buyWorkshopWithCredits,
+  toggleModuleProgress,
 };
