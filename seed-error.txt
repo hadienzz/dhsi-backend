@@ -1,0 +1,70 @@
+﻿node.exe : D:\dhsi\dhsi-back
+end\node_modules\ts-node\src
+\index.ts:859
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" "C:\U
+sers\Advan\AppData\Roaming\ 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+    + CategoryInfo          
+    : NotSpecified: (D:\dh  
+  si\dhsi-ba...rc\index.t   
+ s:859:String) [], Remot    
+eException
+    + FullyQualifiedErrorId 
+    : NativeCommandError
+ 
+    return new 
+TSError(diagnosticText, 
+diagnosticCodes, 
+diagnostics);
+           ^
+TSError: Ô¿» Unable to 
+compile TypeScript:
+prisma/seed-workshop.ts(15,1
+6): error TS2339: Property 
+'moduleProgress' does not 
+exist on type 
+'PrismaClient<never, 
+GlobalOmitConfig | 
+undefined, DefaultArgs>'.
+
+    at createTSError (D:\dhs
+i\dhsi-backend\node_modules\
+ts-node\src\index.ts:859:12)
+    at reportTSError (D:\dhs
+i\dhsi-backend\node_modules\
+ts-node\src\index.ts:863:19)
+    at getOutput (D:\dhsi\dh
+si-backend\node_modules\ts-n
+ode\src\index.ts:1077:36)
+    at Object.compile (D:\dh
+si\dhsi-backend\node_modules
+\ts-node\src\index.ts:1433:4
+1)
+    at Module.m._compile (D:
+\dhsi\dhsi-backend\node_modu
+les\ts-node\src\index.ts:161
+7:30)
+    at node:internal/modules
+/cjs/loader:1839:10
+    at Object.require.extens
+ions.<computed> [as .ts] (D:
+\dhsi\dhsi-backend\node_modu
+les\ts-node\src\index.ts:162
+1:12)
+    at Module.load (node:int
+ernal/modules/cjs/loader:144
+1:32)
+    at Function._load (node:
+internal/modules/cjs/loader:
+1263:12)
+    at 
+TracingChannel.traceSync (no
+de:diagnostics_channel:322:1
+4) {
+  diagnosticCodes: [ 2339 ]
+}

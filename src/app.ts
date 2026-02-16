@@ -10,6 +10,8 @@ import paymentRoutes from "./feat/payments/payment.route";
 import handleWebhook from "./webhook/midtrans-webhook";
 import walletRoutes from "./feat/wallet/wallet.route";
 import paralegalRoute from "./feat/paralegal/paralegal.route";
+import profileRoutes from "./feat/profile/profile.route";
+import calculatorRoutes from "./feat/calculator/calculator.route";
 const app = express();
 
 app.use(
@@ -27,8 +29,10 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/packets", packetRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/wallets", walletRoutes);
-// app.use("/api/workshops", workshopRoutes);
+app.use("/api/workshops", workshopRoutes);
+app.use("/api/calculator", calculatorRoutes);
 app.use("/api/paralegal", paralegalRoute);
+app.use("/api/profile", profileRoutes);
 
 app.use("/api/webhook/midtrans", handleWebhook);
 app.get("/api/health", (req: Request, res: Response, next: NextFunction) => {

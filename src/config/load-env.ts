@@ -19,6 +19,11 @@ interface EnvConfig {
   SUPABASE_ANON_KEY: string;
   MIDTRANS_SERVER_KEY: string;
   MIDTRANS_CLIENT_KEY: string;
+  SMTP_HOST: string;
+  SMTP_PORT: number;
+  SMTP_USER: string;
+  SMTP_PASS: string;
+  SMTP_FROM: string;
 }
 
 export const envConfig: EnvConfig = {
@@ -31,4 +36,9 @@ export const envConfig: EnvConfig = {
   SUPABASE_ANON_KEY: requireEnv("SUPABASE_ANON_KEY"),
   MIDTRANS_SERVER_KEY: requireEnv("MIDTRANS_SERVER_KEY"),
   MIDTRANS_CLIENT_KEY: requireEnv("MIDTRANS_CLIENT_KEY"),
+  SMTP_HOST: requireEnv("SMTP_HOST"),
+  SMTP_PORT: Number(requireEnv("SMTP_PORT")),
+  SMTP_USER: requireEnv("SMTP_USER"),
+  SMTP_PASS: requireEnv("SMTP_PASS"),
+  SMTP_FROM: requireEnv("SMTP_FROM"),
 };

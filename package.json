@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.3",
     "midtrans-client": "^1.4.3",
     "multer": "^2.0.2",
+    "nodemailer": "^8.0.1",
     "zod": "^4.3.5"
   },
   "devDependencies": {
@@ -29,6 +30,7 @@
     "@types/midtrans-client": "^1.4.0",
     "@types/multer": "^2.0.0",
     "@types/node": "^25.0.8",
+    "@types/nodemailer": "^7.0.10",
     "@types/pg": "^8.16.0",
     "dotenv": "^17.2.3",
     "prisma": "^7.2.0",

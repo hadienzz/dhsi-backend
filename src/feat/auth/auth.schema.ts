@@ -11,3 +11,10 @@ export const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters long"),
 });
+
+export const verifyCodeSchema = z.object({
+  code: z
+    .string()
+    .length(6, "Kode verifikasi harus 6 digit")
+    .regex(/^\d{6}$/, "Kode verifikasi harus berupa angka"),
+});

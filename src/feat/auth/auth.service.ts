@@ -6,10 +6,16 @@ import {
 } from "../../utils/token.util";
 import {
   createUser,
+  createVerificationCode,
   findUserByEmail,
+  findValidVerificationCode,
+  invalidateUserVerificationCodes,
+  markUserVerified,
+  markVerificationCodeUsed,
   revokeAllUserRefreshTokens,
   saveRefreshToken,
 } from "./auth.repository";
+import { sendVerificationEmail } from "../../utils/email.util";
 
 interface RegisterInput {
   username: string;
@@ -24,6 +30,11 @@ interface LoginInput {
 }
 
 const REFRESH_TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+const VERIFICATION_CODE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+
+const generateCode = (): string => {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+};
 
 const issueTokensForUser = async (userId: string, email: string) => {
   const payload = { userId, email };
@@ -35,7 +46,7 @@ const issueTokensForUser = async (userId: string, email: string) => {
   await saveRefreshToken(
     userId,
     refreshToken,
-    new Date(Date.now() + REFRESH_TOKEN_TTL_MS)
+    new Date(Date.now() + REFRESH_TOKEN_TTL_MS),
   );
 
   return { accessToken, refreshToken };
@@ -92,4 +103,34 @@ export const loginUserService = async (input: LoginInput) => {
     user: safeUser,
     ...tokens,
   };
+};
+
+// ─── Email Verification ───
+
+export const sendVerificationCodeService = async (
+  userId: string,
+  email: string,
+) => {
+  // Invalidate all previous codes
+  await invalidateUserVerificationCodes(userId);
+
+  const code = generateCode();
+  const expiresAt = new Date(Date.now() + VERIFICATION_CODE_TTL_MS);
+
+  await createVerificationCode(userId, code, expiresAt);
+  await sendVerificationEmail(email, code);
+};
+
+export const verifyCodeService = async (userId: string, code: string) => {
+  const verification = await findValidVerificationCode(userId, code);
+
+  if (!verification) {
+    throw new APIError(
+      "Kode verifikasi tidak valid atau sudah kedaluwarsa",
+      400,
+    );
+  }
+
+  await markVerificationCodeUsed(verification.id);
+  await markUserVerified(userId);
 };
