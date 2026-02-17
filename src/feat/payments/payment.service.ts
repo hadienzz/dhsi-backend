@@ -3,7 +3,7 @@ import { snap } from "../../lib/midtrans";
 import { PaymentPayload, SnapTransactionPayload } from "../../types/types";
 import { packetRepository } from "../packet/packet.repository";
 import { paymentRepository } from "./payment.repository";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../../generated/prisma/client";
 
 export type CreatePaymentResponseDTO = {
   order_id: string;
