@@ -214,6 +214,101 @@ const getModuleById = async (moduleId: string) => {
   });
 };
 
+// ── Rating functions ──
+
+const createOrUpdateRating = async (
+  userId: string,
+  workshopId: string,
+  rating: number,
+  review: string | null,
+) => {
+  return prisma.workshopRating.upsert({
+    where: {
+      user_id_workshop_id: {
+        user_id: userId,
+        workshop_id: workshopId,
+      },
+    },
+    create: {
+      user_id: userId,
+      workshop_id: workshopId,
+      rating,
+      review,
+    },
+    update: {
+      rating,
+      review,
+      updated_at: new Date(),
+    },
+  });
+};
+
+const getRatingsByWorkshop = async (
+  workshopId: string,
+  page: number,
+  limit: number,
+) => {
+  const skip = (page - 1) * limit;
+
+  const [ratings, total] = await Promise.all([
+    prisma.workshopRating.findMany({
+      where: { workshop_id: workshopId },
+      orderBy: { created_at: "desc" },
+      skip,
+      take: limit,
+      select: {
+        id: true,
+        rating: true,
+        review: true,
+        created_at: true,
+        updated_at: true,
+        user: {
+          select: {
+            id: true,
+            username: true,
+            avatar_url: true,
+          },
+        },
+      },
+    }),
+    prisma.workshopRating.count({
+      where: { workshop_id: workshopId },
+    }),
+  ]);
+
+  return {
+    ratings,
+    total,
+    page,
+    limit,
+    total_pages: Math.ceil(total / limit),
+  };
+};
+
+const getWorkshopRatingSummary = async (workshopId: string) => {
+  const result = await prisma.workshopRating.aggregate({
+    where: { workshop_id: workshopId },
+    _avg: { rating: true },
+    _count: { rating: true },
+  });
+
+  return {
+    average_rating: result._avg.rating ?? 0,
+    total_ratings: result._count.rating,
+  };
+};
+
+const getUserRatingForWorkshop = async (userId: string, workshopId: string) => {
+  return prisma.workshopRating.findUnique({
+    where: {
+      user_id_workshop_id: {
+        user_id: userId,
+        workshop_id: workshopId,
+      },
+    },
+  });
+};
+
 export const workshopRepository = {
   selectedWorkshop,
   getPublicWorkshops,
@@ -224,4 +319,8 @@ export const workshopRepository = {
   getModuleProgress,
   upsertModuleProgress,
   getModuleById,
+  createOrUpdateRating,
+  getRatingsByWorkshop,
+  getWorkshopRatingSummary,
+  getUserRatingForWorkshop,
 };

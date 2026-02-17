@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { Router, Request, Response, NextFunction } from "express";
-import { PaymentStatus } from "@prisma/client";
+import type { PaymentStatus, Prisma } from "../../generated/prisma/client";
 import prisma from "../database/prisma";
 import { envConfig } from "../config/load-env";
 import { APIError } from "../middleware/error.middleware";
@@ -76,7 +76,7 @@ router.post(
 
       // Update status idempotently.
       // If this is a settlement event, also credit the user balance exactly once.
-      await prisma.$transaction(async (tx) => {
+      await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
         const statusWhere =
           newStatus === "PENDING" ? { not: "PENDING" as const } : "PENDING";
 
