@@ -209,4 +209,84 @@ export const workshopController = {
   getMyWorkshops,
   getWorkshopContent,
   toggleModuleProgress,
+  submitRating,
+  getWorkshopRatings,
 };
+
+async function submitRating(
+  req: Request,
+  res: Response<APIResponse>,
+  next: NextFunction,
+) {
+  try {
+    if (!req.user) {
+      throw new APIError("Unauthorized", 401);
+    }
+
+    const { workshop_id, rating, review } = req.body;
+
+    if (!workshop_id || !rating) {
+      throw new APIError("workshop_id dan rating wajib diisi", 400);
+    }
+
+    if (typeof rating !== "number" || rating < 1 || rating > 5) {
+      throw new APIError("Rating harus berupa angka antara 1-5", 400);
+    }
+
+    const result = await workshopService.submitRating({
+      userId: req.user.id,
+      workshopId: workshop_id,
+      rating,
+      review: review || null,
+    });
+
+    return res.status(200).json({
+      status: "success",
+      message: "Rating berhasil disimpan",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function getWorkshopRatings(
+  req: Request,
+  res: Response<APIResponse>,
+  next: NextFunction,
+) {
+  try {
+    const workshopId = req.params.workshopId as string;
+    const page = Math.max(1, parseInt(req.query.page as string) || 1);
+    const limit = Math.min(
+      50,
+      Math.max(1, parseInt(req.query.limit as string) || 5),
+    );
+
+    const [ratings, summary] = await Promise.all([
+      workshopRepository.getRatingsByWorkshop(workshopId, page, limit),
+      workshopRepository.getWorkshopRatingSummary(workshopId),
+    ]);
+
+    // If user is authenticated, include their own rating
+    let user_rating = null;
+    if (req.user) {
+      user_rating = await workshopRepository.getUserRatingForWorkshop(
+        req.user.id,
+        workshopId,
+      );
+    }
+
+    return res.status(200).json({
+      status: "success",
+      message: "Ratings retrieved",
+      data: {
+        ...ratings,
+        ...summary,
+        user_rating,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+}

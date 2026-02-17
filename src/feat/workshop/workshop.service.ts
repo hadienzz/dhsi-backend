@@ -151,10 +151,7 @@ const toggleModuleProgress = async (input: ToggleModuleProgressInput) => {
     module.workshop_id,
   );
   if (!isOwned) {
-    throw new APIError(
-      "Anda harus membeli workshop ini terlebih dahulu.",
-      403,
-    );
+    throw new APIError("Anda harus membeli workshop ini terlebih dahulu.", 403);
   }
 
   // Get current progress (toggle)
@@ -177,8 +174,47 @@ const toggleModuleProgress = async (input: ToggleModuleProgressInput) => {
   };
 };
 
+type SubmitRatingInput = {
+  userId: string;
+  workshopId: string;
+  rating: number;
+  review: string | null;
+};
+
+const submitRating = async (input: SubmitRatingInput) => {
+  const { userId, workshopId, rating, review } = input;
+
+  // Verify workshop exists
+  const workshop = await workshopRepository.selectedWorkshop(workshopId);
+  if (!workshop) {
+    throw new APIError("Workshop tidak ditemukan", 404);
+  }
+
+  // Verify user owns the workshop
+  const isOwned = await workshopRepository.checkUserOwnsWorkshop(
+    userId,
+    workshopId,
+  );
+  if (!isOwned) {
+    throw new APIError(
+      "Anda harus membeli workshop ini terlebih dahulu untuk memberikan rating.",
+      403,
+    );
+  }
+
+  const result = await workshopRepository.createOrUpdateRating(
+    userId,
+    workshopId,
+    rating,
+    review,
+  );
+
+  return result;
+};
+
 export const workshopService = {
   softDeleteWorkshop,
   buyWorkshopWithCredits,
   toggleModuleProgress,
+  submitRating,
 };
