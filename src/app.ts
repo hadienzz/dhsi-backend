@@ -16,7 +16,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://dewanhukumsiber.id"],
+    origin: ["http://localhost:3000", "https://dewanhukumsiber.vercel.app"],
     credentials: true,
   }),
 );
