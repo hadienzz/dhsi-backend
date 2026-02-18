@@ -1,6 +1,8 @@
-import { Decimal } from "@prisma/client/runtime/client";
+// import { Decimal } from "../../../geprisma/client/runtime/client";
 import prisma from "../../database/prisma";
+
 import { PaymentStatus, Prisma } from "../../../generated/prisma/client";
+import { Decimal } from "../../../generated/prisma/internal/prismaNamespace";
 
 export type CreatePendingPaymentPayload = {
   user_id: string;
