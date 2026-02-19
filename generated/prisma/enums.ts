@@ -56,3 +56,11 @@ export const CreditTransactionType = {
 } as const
 
 export type CreditTransactionType = (typeof CreditTransactionType)[keyof typeof CreditTransactionType]
+
+
+export const WorkshopPaymentMethod = {
+  FULL_MONEY: 'FULL_MONEY',
+  HYBRID: 'HYBRID'
+} as const
+
+export type WorkshopPaymentMethod = (typeof WorkshopPaymentMethod)[keyof typeof WorkshopPaymentMethod]

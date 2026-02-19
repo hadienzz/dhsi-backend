@@ -24,8 +24,7 @@ const toPaymentResponse = (payment: {
 };
 
 const createPayment = async (payload: PaymentPayload) => {
-
-  console.log(payload)
+  console.log(payload);
   const packet = await packetRepository.getPacketById(payload.package_id);
   const amount = Prisma.Decimal(packet?.price || 0);
 

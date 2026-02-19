@@ -51,6 +51,11 @@ enum CreditTransactionType {
   ADJUSTMENT
 }
 
+enum WorkshopPaymentMethod {
+  FULL_MONEY
+  HYBRID
+}
+
 ////////////////////////////////
 // USERS & AUTH
 ////////////////////////////////
@@ -90,6 +95,7 @@ model User {
   wallet                    UserWallet?
   credit_transactions       CreditTransaction[]
   package_payments          PackagePayment[]
+  workshop_payments         WorkshopPayment[]
   workshop_credit_purchases WorkshopCreditPurchase[]
   calculatorUsages          CalculatorUsages[]
   module_progresses         WorkshopModuleProgress[]
@@ -149,6 +155,7 @@ model Workshop {
 
   short_description String
 
+  price        Int
   credit_price Int
 
   user_id String @db.Uuid
@@ -159,11 +166,12 @@ model Workshop {
 
   user User @relation(fields: [user_id], references: [id])
 
-  modules          WorkshopModule[]
-  selected_users   SelectedWorkshop[]
-  ratings          WorkshopRating[]
-  liked_users      LikedWorkshop[]
-  credit_purchases WorkshopCreditPurchase[]
+  modules           WorkshopModule[]
+  selected_users    SelectedWorkshop[]
+  ratings           WorkshopRating[]
+  liked_users       LikedWorkshop[]
+  credit_purchases  WorkshopCreditPurchase[]
+  workshop_payments WorkshopPayment[]
 
   @@map("workshops")
 }
@@ -404,6 +412,43 @@ model WorkshopCreditPurchase {
   @@map("workshop_credit_purchases")
 }
 
+////////////////////////////////
+// WORKSHOP PAYMENT (MIDTRANS)
+////////////////////////////////
+
+model WorkshopPayment {
+  id String @id @default(uuid()) @db.Uuid
+
+  user_id     String @db.Uuid
+  workshop_id String @db.Uuid
+
+  order_id String @unique
+
+  transaction_token String?
+
+  amount         Decimal               @db.Decimal(10, 2)
+  credit_used    Int                   @default(0)
+  payment_method WorkshopPaymentMethod
+
+  status          PaymentStatus @default(PENDING)
+  idempotency_key String
+
+  snap_request_status SnapRequestStatus @default(NOT_STARTED)
+  snap_error          String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user     User     @relation(fields: [user_id], references: [id])
+  workshop Workshop @relation(fields: [workshop_id], references: [id])
+
+  @@unique([user_id, idempotency_key])
+  @@index([user_id])
+  @@index([workshop_id])
+  @@index([status])
+  @@map("workshop_payments")
+}
+
 model ParalegalDHSI {
   id                     String @id @default(uuid()) @db.Uuid
   email_address          String @unique
@@ -413,6 +458,24 @@ model ParalegalDHSI {
   rencana_kantor_wilayah String
 
   @@map("paralegal_dhsi")
+}
+
+model KeanggotaanDHSI {
+  id                 String @id @default(uuid()) @db.Uuid
+  nama_lengkap       String
+  role               String
+  upload_foto_formal String
+
+  @@map("keanggotaan_dhsi")
+}
+
+model AdvokatDHSI {
+  id                 String @id @default(uuid()) @db.Uuid
+  nama_lengkap       String
+  role               String
+  upload_foto_formal String
+
+  @@map("advokat_dhsi")
 }
 
 model CalculatorUsages {

@@ -3,6 +3,8 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client";
 import bcrypt from "bcrypt";
 import { envConfig } from "../src/config/load-env";
+import { seedPackages } from "./seed-package";
+import { seedWorkshops } from "./seed-workshop";
 
 const pool = new Pool({
   connectionString: envConfig.DATABASE_DIRECT_URL,
@@ -19,28 +21,58 @@ async function main() {
     where: { email: "admin@dhsi.com" },
   });
 
-  if (existingAdmin) {
-    console.log("⚠️  Admin user already exists, skipping...");
-    return;
+  let admin = existingAdmin;
+
+  if (!admin) {
+    const hashedPassword = await bcrypt.hash("admin123", 10);
+
+    admin = await prisma.user.create({
+      data: {
+        email: "admin@dhsi.com",
+        username: "Admin DHSI",
+        password: hashedPassword,
+        phone: "081234567890",
+        role: "admin",
+        is_verified: true,
+      },
+    });
+
+    console.log("✅ Admin user created:");
+    console.log(`   Email: ${admin.email}`);
+    console.log(`   Password: admin123`);
+    console.log(`   Role: ${admin.role}`);
+  } else {
+    console.log("✅ Admin user already exists:");
+    console.log(`   Email: ${admin.email}`);
+    console.log(`   Role: ${admin.role}`);
   }
 
-  // Create admin user
-  const hashedPassword = await bcrypt.hash("admin123", 10);
-
-  const admin = await prisma.user.create({
-    data: {
-      email: "admin@dhsi.com",
-      username: "Admin DHSI",
-      password: hashedPassword,
-      phone: "081234567890",
-      role: "admin",
-    },
+  // Ensure wallet exists (optional, but useful for credit flows)
+  const existingWallet = await prisma.userWallet.findUnique({
+    where: { user_id: admin.id },
   });
 
-  console.log("✅ Admin user created:");
-  console.log(`   Email: ${admin.email}`);
-  console.log(`   Password: admin123`);
-  console.log(`   Role: ${admin.role}`);
+  if (!existingWallet) {
+    await prisma.userWallet.create({
+      data: {
+        user_id: admin.id,
+        balance: 0,
+      },
+    });
+    console.log("✅ Admin wallet created (balance=0)");
+  }
+
+  await seedPackages(prisma);
+  console.log("✅ Pricing packages seeded");
+
+  const workshopCount = await prisma.workshop.count();
+  if (workshopCount === 0) {
+    await seedWorkshops(prisma);
+  } else {
+    console.log(
+      `⚠️  Workshops already exist (${workshopCount}), skipping workshop seed...`,
+    );
+  }
 }
 
 main()

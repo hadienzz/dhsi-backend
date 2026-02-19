@@ -351,6 +351,23 @@ export type EnumSnapRequestStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumSnapRequestStatusFilter<$PrismaModel>
 }
 
+export type EnumWorkshopPaymentMethodFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkshopPaymentMethod | Prisma.EnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkshopPaymentMethod[] | Prisma.ListEnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkshopPaymentMethod[] | Prisma.ListEnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkshopPaymentMethodFilter<$PrismaModel> | $Enums.WorkshopPaymentMethod
+}
+
+export type EnumWorkshopPaymentMethodWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkshopPaymentMethod | Prisma.EnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkshopPaymentMethod[] | Prisma.ListEnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkshopPaymentMethod[] | Prisma.ListEnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkshopPaymentMethodWithAggregatesFilter<$PrismaModel> | $Enums.WorkshopPaymentMethod
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWorkshopPaymentMethodFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWorkshopPaymentMethodFilter<$PrismaModel>
+}
+
 export type NestedUuidFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -695,6 +712,23 @@ export type NestedEnumSnapRequestStatusWithAggregatesFilter<$PrismaModel = never
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumSnapRequestStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumSnapRequestStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumWorkshopPaymentMethodFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkshopPaymentMethod | Prisma.EnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkshopPaymentMethod[] | Prisma.ListEnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkshopPaymentMethod[] | Prisma.ListEnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkshopPaymentMethodFilter<$PrismaModel> | $Enums.WorkshopPaymentMethod
+}
+
+export type NestedEnumWorkshopPaymentMethodWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.WorkshopPaymentMethod | Prisma.EnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  in?: $Enums.WorkshopPaymentMethod[] | Prisma.ListEnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  notIn?: $Enums.WorkshopPaymentMethod[] | Prisma.ListEnumWorkshopPaymentMethodFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumWorkshopPaymentMethodWithAggregatesFilter<$PrismaModel> | $Enums.WorkshopPaymentMethod
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumWorkshopPaymentMethodFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumWorkshopPaymentMethodFilter<$PrismaModel>
 }
 
 

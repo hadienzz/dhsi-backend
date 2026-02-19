@@ -65,7 +65,10 @@ export const ModelName = {
   PricingPackage: 'PricingPackage',
   PackagePayment: 'PackagePayment',
   WorkshopCreditPurchase: 'WorkshopCreditPurchase',
+  WorkshopPayment: 'WorkshopPayment',
   ParalegalDHSI: 'ParalegalDHSI',
+  KeanggotaanDHSI: 'KeanggotaanDHSI',
+  AdvokatDHSI: 'AdvokatDHSI',
   CalculatorUsages: 'CalculatorUsages'
 } as const
 
@@ -142,6 +145,7 @@ export const WorkshopScalarFieldEnum = {
   benefits: 'benefits',
   category: 'category',
   short_description: 'short_description',
+  price: 'price',
   credit_price: 'credit_price',
   user_id: 'user_id',
   created_at: 'created_at',
@@ -295,6 +299,26 @@ export const WorkshopCreditPurchaseScalarFieldEnum = {
 export type WorkshopCreditPurchaseScalarFieldEnum = (typeof WorkshopCreditPurchaseScalarFieldEnum)[keyof typeof WorkshopCreditPurchaseScalarFieldEnum]
 
 
+export const WorkshopPaymentScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  workshop_id: 'workshop_id',
+  order_id: 'order_id',
+  transaction_token: 'transaction_token',
+  amount: 'amount',
+  credit_used: 'credit_used',
+  payment_method: 'payment_method',
+  status: 'status',
+  idempotency_key: 'idempotency_key',
+  snap_request_status: 'snap_request_status',
+  snap_error: 'snap_error',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type WorkshopPaymentScalarFieldEnum = (typeof WorkshopPaymentScalarFieldEnum)[keyof typeof WorkshopPaymentScalarFieldEnum]
+
+
 export const ParalegalDHSIScalarFieldEnum = {
   id: 'id',
   email_address: 'email_address',
@@ -305,6 +329,26 @@ export const ParalegalDHSIScalarFieldEnum = {
 } as const
 
 export type ParalegalDHSIScalarFieldEnum = (typeof ParalegalDHSIScalarFieldEnum)[keyof typeof ParalegalDHSIScalarFieldEnum]
+
+
+export const KeanggotaanDHSIScalarFieldEnum = {
+  id: 'id',
+  nama_lengkap: 'nama_lengkap',
+  role: 'role',
+  upload_foto_formal: 'upload_foto_formal'
+} as const
+
+export type KeanggotaanDHSIScalarFieldEnum = (typeof KeanggotaanDHSIScalarFieldEnum)[keyof typeof KeanggotaanDHSIScalarFieldEnum]
+
+
+export const AdvokatDHSIScalarFieldEnum = {
+  id: 'id',
+  nama_lengkap: 'nama_lengkap',
+  role: 'role',
+  upload_foto_formal: 'upload_foto_formal'
+} as const
+
+export type AdvokatDHSIScalarFieldEnum = (typeof AdvokatDHSIScalarFieldEnum)[keyof typeof AdvokatDHSIScalarFieldEnum]
 
 
 export const CalculatorUsagesScalarFieldEnum = {

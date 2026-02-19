@@ -54,6 +54,8 @@ router.post(
   workshopController.buyWorkshopWithCredits,
 );
 
+router.post("/checkout", verifyToken, workshopController.checkoutWorkshop);
+
 router.get("/my-workshops", verifyToken, workshopController.getMyWorkshops);
 
 // Purchase-gated content (must own the workshop)

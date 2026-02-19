@@ -6,6 +6,7 @@ export type createWorkshopPayload = {
   benefits: string[];
   category: string;
   // level: string;
+  price: number;
   credit_price: number;
   user_id: string;
 };
@@ -39,4 +40,14 @@ export interface SnapTransactionPayload {
 export interface BuyWorkshopWithCreditsPayload {
   workshop_id: string;
   user_id: string;
+}
+
+export interface WorkshopCheckoutPayload {
+  workshop_id: string;
+  user_id: string;
+  payment_method: "money" | "hybrid" | "credit";
+  credits_to_use?: number;
+  idempotency_key: string;
+  name: string;
+  email: string;
 }

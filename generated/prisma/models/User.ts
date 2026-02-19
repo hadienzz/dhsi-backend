@@ -295,6 +295,7 @@ export type UserWhereInput = {
   wallet?: Prisma.XOR<Prisma.UserWalletNullableScalarRelationFilter, Prisma.UserWalletWhereInput> | null
   credit_transactions?: Prisma.CreditTransactionListRelationFilter
   package_payments?: Prisma.PackagePaymentListRelationFilter
+  workshop_payments?: Prisma.WorkshopPaymentListRelationFilter
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseListRelationFilter
   calculatorUsages?: Prisma.CalculatorUsagesListRelationFilter
   module_progresses?: Prisma.WorkshopModuleProgressListRelationFilter
@@ -328,6 +329,7 @@ export type UserOrderByWithRelationInput = {
   wallet?: Prisma.UserWalletOrderByWithRelationInput
   credit_transactions?: Prisma.CreditTransactionOrderByRelationAggregateInput
   package_payments?: Prisma.PackagePaymentOrderByRelationAggregateInput
+  workshop_payments?: Prisma.WorkshopPaymentOrderByRelationAggregateInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseOrderByRelationAggregateInput
   calculatorUsages?: Prisma.CalculatorUsagesOrderByRelationAggregateInput
   module_progresses?: Prisma.WorkshopModuleProgressOrderByRelationAggregateInput
@@ -364,6 +366,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   wallet?: Prisma.XOR<Prisma.UserWalletNullableScalarRelationFilter, Prisma.UserWalletWhereInput> | null
   credit_transactions?: Prisma.CreditTransactionListRelationFilter
   package_payments?: Prisma.PackagePaymentListRelationFilter
+  workshop_payments?: Prisma.WorkshopPaymentListRelationFilter
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseListRelationFilter
   calculatorUsages?: Prisma.CalculatorUsagesListRelationFilter
   module_progresses?: Prisma.WorkshopModuleProgressListRelationFilter
@@ -445,6 +448,7 @@ export type UserCreateInput = {
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
@@ -478,6 +482,7 @@ export type UserUncheckedCreateInput = {
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
@@ -511,6 +516,7 @@ export type UserUpdateInput = {
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
@@ -544,6 +550,7 @@ export type UserUncheckedUpdateInput = {
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -858,6 +865,20 @@ export type UserUpdateOneRequiredWithoutWorkshop_credit_purchasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWorkshop_credit_purchasesInput, Prisma.UserUpdateWithoutWorkshop_credit_purchasesInput>, Prisma.UserUncheckedUpdateWithoutWorkshop_credit_purchasesInput>
 }
 
+export type UserCreateNestedOneWithoutWorkshop_paymentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWorkshop_paymentsInput, Prisma.UserUncheckedCreateWithoutWorkshop_paymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWorkshop_paymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWorkshop_paymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWorkshop_paymentsInput, Prisma.UserUncheckedCreateWithoutWorkshop_paymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWorkshop_paymentsInput
+  upsert?: Prisma.UserUpsertWithoutWorkshop_paymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWorkshop_paymentsInput, Prisma.UserUpdateWithoutWorkshop_paymentsInput>, Prisma.UserUncheckedUpdateWithoutWorkshop_paymentsInput>
+}
+
 export type UserCreateNestedOneWithoutCalculatorUsagesInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCalculatorUsagesInput, Prisma.UserUncheckedCreateWithoutCalculatorUsagesInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCalculatorUsagesInput
@@ -899,6 +920,7 @@ export type UserCreateWithoutEmail_verificationsInput = {
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
@@ -931,6 +953,7 @@ export type UserUncheckedCreateWithoutEmail_verificationsInput = {
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
@@ -979,6 +1002,7 @@ export type UserUpdateWithoutEmail_verificationsInput = {
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
@@ -1011,6 +1035,7 @@ export type UserUncheckedUpdateWithoutEmail_verificationsInput = {
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -1043,6 +1068,7 @@ export type UserCreateWithoutRefresh_tokensInput = {
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
@@ -1075,6 +1101,7 @@ export type UserUncheckedCreateWithoutRefresh_tokensInput = {
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
@@ -1123,6 +1150,7 @@ export type UserUpdateWithoutRefresh_tokensInput = {
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
@@ -1155,6 +1183,7 @@ export type UserUncheckedUpdateWithoutRefresh_tokensInput = {
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -1187,6 +1216,7 @@ export type UserCreateWithoutWorkshopsInput = {
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
@@ -1219,6 +1249,7 @@ export type UserUncheckedCreateWithoutWorkshopsInput = {
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
@@ -1267,6 +1298,7 @@ export type UserUpdateWithoutWorkshopsInput = {
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
@@ -1299,6 +1331,7 @@ export type UserUncheckedUpdateWithoutWorkshopsInput = {
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -1332,6 +1365,7 @@ export type UserCreateWithoutModule_progressesInput = {
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
 }
@@ -1364,6 +1398,7 @@ export type UserUncheckedCreateWithoutModule_progressesInput = {
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1412,6 +1447,7 @@ export type UserUpdateWithoutModule_progressesInput = {
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
 }
@@ -1444,6 +1480,7 @@ export type UserUncheckedUpdateWithoutModule_progressesInput = {
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1475,6 +1512,7 @@ export type UserCreateWithoutSelected_workshopsInput = {
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
@@ -1507,6 +1545,7 @@ export type UserUncheckedCreateWithoutSelected_workshopsInput = {
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
@@ -1555,6 +1594,7 @@ export type UserUpdateWithoutSelected_workshopsInput = {
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
@@ -1587,6 +1627,7 @@ export type UserUncheckedUpdateWithoutSelected_workshopsInput = {
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -1619,6 +1660,7 @@ export type UserCreateWithoutWorkshop_ratingsInput = {
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
@@ -1651,6 +1693,7 @@ export type UserUncheckedCreateWithoutWorkshop_ratingsInput = {
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
@@ -1699,6 +1742,7 @@ export type UserUpdateWithoutWorkshop_ratingsInput = {
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
@@ -1731,6 +1775,7 @@ export type UserUncheckedUpdateWithoutWorkshop_ratingsInput = {
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -1763,6 +1808,7 @@ export type UserCreateWithoutLiked_workshopsInput = {
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
@@ -1795,6 +1841,7 @@ export type UserUncheckedCreateWithoutLiked_workshopsInput = {
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
@@ -1843,6 +1890,7 @@ export type UserUpdateWithoutLiked_workshopsInput = {
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
@@ -1875,6 +1923,7 @@ export type UserUncheckedUpdateWithoutLiked_workshopsInput = {
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -1907,6 +1956,7 @@ export type UserCreateWithoutWalletInput = {
   liked_workshops?: Prisma.LikedWorkshopCreateNestedManyWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
@@ -1939,6 +1989,7 @@ export type UserUncheckedCreateWithoutWalletInput = {
   liked_workshops?: Prisma.LikedWorkshopUncheckedCreateNestedManyWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
@@ -1987,6 +2038,7 @@ export type UserUpdateWithoutWalletInput = {
   liked_workshops?: Prisma.LikedWorkshopUpdateManyWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
@@ -2019,6 +2071,7 @@ export type UserUncheckedUpdateWithoutWalletInput = {
   liked_workshops?: Prisma.LikedWorkshopUncheckedUpdateManyWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -2051,6 +2104,7 @@ export type UserCreateWithoutCredit_transactionsInput = {
   liked_workshops?: Prisma.LikedWorkshopCreateNestedManyWithoutUserInput
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
@@ -2083,6 +2137,7 @@ export type UserUncheckedCreateWithoutCredit_transactionsInput = {
   liked_workshops?: Prisma.LikedWorkshopUncheckedCreateNestedManyWithoutUserInput
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
@@ -2131,6 +2186,7 @@ export type UserUpdateWithoutCredit_transactionsInput = {
   liked_workshops?: Prisma.LikedWorkshopUpdateManyWithoutUserNestedInput
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
@@ -2163,6 +2219,7 @@ export type UserUncheckedUpdateWithoutCredit_transactionsInput = {
   liked_workshops?: Prisma.LikedWorkshopUncheckedUpdateManyWithoutUserNestedInput
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -2195,6 +2252,7 @@ export type UserCreateWithoutPackage_paymentsInput = {
   liked_workshops?: Prisma.LikedWorkshopCreateNestedManyWithoutUserInput
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
@@ -2227,6 +2285,7 @@ export type UserUncheckedCreateWithoutPackage_paymentsInput = {
   liked_workshops?: Prisma.LikedWorkshopUncheckedCreateNestedManyWithoutUserInput
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
@@ -2275,6 +2334,7 @@ export type UserUpdateWithoutPackage_paymentsInput = {
   liked_workshops?: Prisma.LikedWorkshopUpdateManyWithoutUserNestedInput
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
@@ -2307,6 +2367,7 @@ export type UserUncheckedUpdateWithoutPackage_paymentsInput = {
   liked_workshops?: Prisma.LikedWorkshopUncheckedUpdateManyWithoutUserNestedInput
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
@@ -2340,6 +2401,7 @@ export type UserCreateWithoutWorkshop_credit_purchasesInput = {
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
 }
@@ -2372,6 +2434,7 @@ export type UserUncheckedCreateWithoutWorkshop_credit_purchasesInput = {
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
 }
@@ -2420,6 +2483,7 @@ export type UserUpdateWithoutWorkshop_credit_purchasesInput = {
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
 }
@@ -2452,6 +2516,155 @@ export type UserUncheckedUpdateWithoutWorkshop_credit_purchasesInput = {
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
+  calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
+  module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutWorkshop_paymentsInput = {
+  id?: string
+  email: string
+  username: string
+  password: string
+  phone?: string | null
+  role?: $Enums.Role
+  is_verified?: boolean
+  bio?: string | null
+  avatar_url?: string | null
+  address?: string | null
+  city?: string | null
+  province?: string | null
+  postal_code?: string | null
+  occupation?: string | null
+  institution?: string | null
+  date_of_birth?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string | null
+  refresh_tokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  email_verifications?: Prisma.EmailVerificationCreateNestedManyWithoutUserInput
+  workshops?: Prisma.WorkshopCreateNestedManyWithoutUserInput
+  selected_workshops?: Prisma.SelectedWorkshopCreateNestedManyWithoutUserInput
+  workshop_ratings?: Prisma.WorkshopRatingCreateNestedManyWithoutUserInput
+  liked_workshops?: Prisma.LikedWorkshopCreateNestedManyWithoutUserInput
+  wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
+  credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
+  package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
+  calculatorUsages?: Prisma.CalculatorUsagesCreateNestedManyWithoutUserInput
+  module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutWorkshop_paymentsInput = {
+  id?: string
+  email: string
+  username: string
+  password: string
+  phone?: string | null
+  role?: $Enums.Role
+  is_verified?: boolean
+  bio?: string | null
+  avatar_url?: string | null
+  address?: string | null
+  city?: string | null
+  province?: string | null
+  postal_code?: string | null
+  occupation?: string | null
+  institution?: string | null
+  date_of_birth?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string | null
+  refresh_tokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  email_verifications?: Prisma.EmailVerificationUncheckedCreateNestedManyWithoutUserInput
+  workshops?: Prisma.WorkshopUncheckedCreateNestedManyWithoutUserInput
+  selected_workshops?: Prisma.SelectedWorkshopUncheckedCreateNestedManyWithoutUserInput
+  workshop_ratings?: Prisma.WorkshopRatingUncheckedCreateNestedManyWithoutUserInput
+  liked_workshops?: Prisma.LikedWorkshopUncheckedCreateNestedManyWithoutUserInput
+  wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
+  credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
+  package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
+  calculatorUsages?: Prisma.CalculatorUsagesUncheckedCreateNestedManyWithoutUserInput
+  module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutWorkshop_paymentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWorkshop_paymentsInput, Prisma.UserUncheckedCreateWithoutWorkshop_paymentsInput>
+}
+
+export type UserUpsertWithoutWorkshop_paymentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWorkshop_paymentsInput, Prisma.UserUncheckedUpdateWithoutWorkshop_paymentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWorkshop_paymentsInput, Prisma.UserUncheckedCreateWithoutWorkshop_paymentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWorkshop_paymentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWorkshop_paymentsInput, Prisma.UserUncheckedUpdateWithoutWorkshop_paymentsInput>
+}
+
+export type UserUpdateWithoutWorkshop_paymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postal_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refresh_tokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  email_verifications?: Prisma.EmailVerificationUpdateManyWithoutUserNestedInput
+  workshops?: Prisma.WorkshopUpdateManyWithoutUserNestedInput
+  selected_workshops?: Prisma.SelectedWorkshopUpdateManyWithoutUserNestedInput
+  workshop_ratings?: Prisma.WorkshopRatingUpdateManyWithoutUserNestedInput
+  liked_workshops?: Prisma.LikedWorkshopUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
+  credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
+  package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
+  calculatorUsages?: Prisma.CalculatorUsagesUpdateManyWithoutUserNestedInput
+  module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWorkshop_paymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  province?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postal_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  institution?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refresh_tokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  email_verifications?: Prisma.EmailVerificationUncheckedUpdateManyWithoutUserNestedInput
+  workshops?: Prisma.WorkshopUncheckedUpdateManyWithoutUserNestedInput
+  selected_workshops?: Prisma.SelectedWorkshopUncheckedUpdateManyWithoutUserNestedInput
+  workshop_ratings?: Prisma.WorkshopRatingUncheckedUpdateManyWithoutUserNestedInput
+  liked_workshops?: Prisma.LikedWorkshopUncheckedUpdateManyWithoutUserNestedInput
+  wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
+  credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
+  package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   calculatorUsages?: Prisma.CalculatorUsagesUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -2484,6 +2697,7 @@ export type UserCreateWithoutCalculatorUsagesInput = {
   wallet?: Prisma.UserWalletCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressCreateNestedManyWithoutUserInput
 }
@@ -2516,6 +2730,7 @@ export type UserUncheckedCreateWithoutCalculatorUsagesInput = {
   wallet?: Prisma.UserWalletUncheckedCreateNestedOneWithoutUserInput
   credit_transactions?: Prisma.CreditTransactionUncheckedCreateNestedManyWithoutUserInput
   package_payments?: Prisma.PackagePaymentUncheckedCreateNestedManyWithoutUserInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedCreateNestedManyWithoutUserInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedCreateNestedManyWithoutUserInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedCreateNestedManyWithoutUserInput
 }
@@ -2564,6 +2779,7 @@ export type UserUpdateWithoutCalculatorUsagesInput = {
   wallet?: Prisma.UserWalletUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUpdateManyWithoutUserNestedInput
 }
@@ -2596,6 +2812,7 @@ export type UserUncheckedUpdateWithoutCalculatorUsagesInput = {
   wallet?: Prisma.UserWalletUncheckedUpdateOneWithoutUserNestedInput
   credit_transactions?: Prisma.CreditTransactionUncheckedUpdateManyWithoutUserNestedInput
   package_payments?: Prisma.PackagePaymentUncheckedUpdateManyWithoutUserNestedInput
+  workshop_payments?: Prisma.WorkshopPaymentUncheckedUpdateManyWithoutUserNestedInput
   workshop_credit_purchases?: Prisma.WorkshopCreditPurchaseUncheckedUpdateManyWithoutUserNestedInput
   module_progresses?: Prisma.WorkshopModuleProgressUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -2614,6 +2831,7 @@ export type UserCountOutputType = {
   liked_workshops: number
   credit_transactions: number
   package_payments: number
+  workshop_payments: number
   workshop_credit_purchases: number
   calculatorUsages: number
   module_progresses: number
@@ -2628,6 +2846,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   liked_workshops?: boolean | UserCountOutputTypeCountLiked_workshopsArgs
   credit_transactions?: boolean | UserCountOutputTypeCountCredit_transactionsArgs
   package_payments?: boolean | UserCountOutputTypeCountPackage_paymentsArgs
+  workshop_payments?: boolean | UserCountOutputTypeCountWorkshop_paymentsArgs
   workshop_credit_purchases?: boolean | UserCountOutputTypeCountWorkshop_credit_purchasesArgs
   calculatorUsages?: boolean | UserCountOutputTypeCountCalculatorUsagesArgs
   module_progresses?: boolean | UserCountOutputTypeCountModule_progressesArgs
@@ -2702,6 +2921,13 @@ export type UserCountOutputTypeCountPackage_paymentsArgs<ExtArgs extends runtime
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountWorkshop_paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkshopPaymentWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountWorkshop_credit_purchasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.WorkshopCreditPurchaseWhereInput
 }
@@ -2749,6 +2975,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   wallet?: boolean | Prisma.User$walletArgs<ExtArgs>
   credit_transactions?: boolean | Prisma.User$credit_transactionsArgs<ExtArgs>
   package_payments?: boolean | Prisma.User$package_paymentsArgs<ExtArgs>
+  workshop_payments?: boolean | Prisma.User$workshop_paymentsArgs<ExtArgs>
   workshop_credit_purchases?: boolean | Prisma.User$workshop_credit_purchasesArgs<ExtArgs>
   calculatorUsages?: boolean | Prisma.User$calculatorUsagesArgs<ExtArgs>
   module_progresses?: boolean | Prisma.User$module_progressesArgs<ExtArgs>
@@ -2829,6 +3056,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   wallet?: boolean | Prisma.User$walletArgs<ExtArgs>
   credit_transactions?: boolean | Prisma.User$credit_transactionsArgs<ExtArgs>
   package_payments?: boolean | Prisma.User$package_paymentsArgs<ExtArgs>
+  workshop_payments?: boolean | Prisma.User$workshop_paymentsArgs<ExtArgs>
   workshop_credit_purchases?: boolean | Prisma.User$workshop_credit_purchasesArgs<ExtArgs>
   calculatorUsages?: boolean | Prisma.User$calculatorUsagesArgs<ExtArgs>
   module_progresses?: boolean | Prisma.User$module_progressesArgs<ExtArgs>
@@ -2849,6 +3077,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     wallet: Prisma.$UserWalletPayload<ExtArgs> | null
     credit_transactions: Prisma.$CreditTransactionPayload<ExtArgs>[]
     package_payments: Prisma.$PackagePaymentPayload<ExtArgs>[]
+    workshop_payments: Prisma.$WorkshopPaymentPayload<ExtArgs>[]
     workshop_credit_purchases: Prisma.$WorkshopCreditPurchasePayload<ExtArgs>[]
     calculatorUsages: Prisma.$CalculatorUsagesPayload<ExtArgs>[]
     module_progresses: Prisma.$WorkshopModuleProgressPayload<ExtArgs>[]
@@ -3275,6 +3504,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   wallet<T extends Prisma.User$walletArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$walletArgs<ExtArgs>>): Prisma.Prisma__UserWalletClient<runtime.Types.Result.GetResult<Prisma.$UserWalletPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   credit_transactions<T extends Prisma.User$credit_transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$credit_transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CreditTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   package_payments<T extends Prisma.User$package_paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$package_paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PackagePaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  workshop_payments<T extends Prisma.User$workshop_paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workshop_paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkshopPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   workshop_credit_purchases<T extends Prisma.User$workshop_credit_purchasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workshop_credit_purchasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkshopCreditPurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   calculatorUsages<T extends Prisma.User$calculatorUsagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$calculatorUsagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CalculatorUsagesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   module_progresses<T extends Prisma.User$module_progressesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$module_progressesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkshopModuleProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3921,6 +4151,30 @@ export type User$package_paymentsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.PackagePaymentScalarFieldEnum | Prisma.PackagePaymentScalarFieldEnum[]
+}
+
+/**
+ * User.workshop_payments
+ */
+export type User$workshop_paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkshopPayment
+   */
+  select?: Prisma.WorkshopPaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorkshopPayment
+   */
+  omit?: Prisma.WorkshopPaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkshopPaymentInclude<ExtArgs> | null
+  where?: Prisma.WorkshopPaymentWhereInput
+  orderBy?: Prisma.WorkshopPaymentOrderByWithRelationInput | Prisma.WorkshopPaymentOrderByWithRelationInput[]
+  cursor?: Prisma.WorkshopPaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorkshopPaymentScalarFieldEnum | Prisma.WorkshopPaymentScalarFieldEnum[]
 }
 
 /**
