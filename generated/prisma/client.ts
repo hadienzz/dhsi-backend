@@ -108,10 +108,25 @@ export type PackagePayment = Prisma.PackagePaymentModel
  */
 export type WorkshopCreditPurchase = Prisma.WorkshopCreditPurchaseModel
 /**
+ * Model WorkshopPayment
+ * 
+ */
+export type WorkshopPayment = Prisma.WorkshopPaymentModel
+/**
  * Model ParalegalDHSI
  * 
  */
 export type ParalegalDHSI = Prisma.ParalegalDHSIModel
+/**
+ * Model KeanggotaanDHSI
+ * 
+ */
+export type KeanggotaanDHSI = Prisma.KeanggotaanDHSIModel
+/**
+ * Model AdvokatDHSI
+ * 
+ */
+export type AdvokatDHSI = Prisma.AdvokatDHSIModel
 /**
  * Model CalculatorUsages
  * 

@@ -59,6 +59,50 @@ export const buyWorkshopWithCredits = async (
   }
 };
 
+export const checkoutWorkshop = async (
+  req: Request,
+  res: Response<APIResponse>,
+  next: NextFunction,
+) => {
+  try {
+    const user_id = req.user?.id!;
+    const name = req.user?.username!;
+    const email = req.user?.email!;
+    const { workshop_id, payment_method, credits_to_use } = req.body;
+
+    const rawKey = req.header("Idempotency-Key")?.trim();
+    if (!rawKey) {
+      throw new APIError("Idempotency-Key header is required", 400);
+    }
+
+    if (!workshop_id || !payment_method) {
+      throw new APIError("workshop_id dan payment_method wajib diisi", 400);
+    }
+
+    if (!["money", "hybrid"].includes(payment_method)) {
+      throw new APIError("payment_method harus 'money' atau 'hybrid'", 400);
+    }
+
+    const result = await workshopService.checkoutWorkshop({
+      workshop_id,
+      user_id,
+      payment_method,
+      credits_to_use: credits_to_use ?? 0,
+      idempotency_key: rawKey,
+      name,
+      email,
+    });
+
+    return res.status(200).json({
+      status: "success",
+      message: "Workshop checkout berhasil",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getWorkshops = async (
   req: Request,
   res: Response<APIResponse>,
@@ -204,6 +248,7 @@ export const toggleModuleProgress = async (
 export const workshopController = {
   deleteWorkshop,
   buyWorkshopWithCredits,
+  checkoutWorkshop,
   getWorkshops,
   getWorkshopDetailPublic,
   getMyWorkshops,

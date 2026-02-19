@@ -1,9 +1,11 @@
 import prisma from "../../database/prisma";
+import { Prisma } from "../../../generated/prisma/client";
+import { Decimal } from "../../../generated/prisma/internal/prismaNamespace";
 
 const selectedWorkshop = (workshop_id: string) => {
   const workshop = prisma.workshop.findUnique({
     where: { id: workshop_id },
-    select: { id: true, credit_price: true, title: true },
+    select: { id: true, price: true, credit_price: true, title: true },
   });
 
   return workshop;
@@ -24,6 +26,7 @@ const getPublicWorkshops = () => {
       description: true,
       category: true,
       thumbnail: true,
+      price: true,
       credit_price: true,
       benefits: true,
       created_at: true,
@@ -44,6 +47,7 @@ const getWorkshopDetail = async (id: string) => {
       description: true,
       category: true,
       thumbnail: true,
+      price: true,
       credit_price: true,
       benefits: true,
       created_at: true,
@@ -84,6 +88,7 @@ const getWorkshopContentWithProgress = async (
       description: true,
       category: true,
       thumbnail: true,
+      price: true,
       credit_price: true,
       benefits: true,
       created_at: true,
@@ -127,6 +132,7 @@ const getUserWorkshops = async (userId: string) => {
           short_description: true,
           thumbnail: true,
           category: true,
+          price: true,
           credit_price: true,
           created_at: true,
           modules: {
@@ -323,4 +329,116 @@ export const workshopRepository = {
   getRatingsByWorkshop,
   getWorkshopRatingSummary,
   getUserRatingForWorkshop,
+  // Workshop payment (Midtrans)
+  createOrGetPendingWorkshopPayment,
+  getWorkshopPaymentByIdempotencyKey,
+  tryStartWorkshopSnapRequest,
+  markWorkshopSnapCompleted,
+  markWorkshopSnapFailed,
+  getWorkshopPaymentById,
 };
+
+// ── Workshop Payment (Midtrans) functions ──
+
+export type CreateWorkshopPaymentPayload = {
+  user_id: string;
+  workshop_id: string;
+  order_id: string;
+  amount: Decimal;
+  credit_used: number;
+  payment_method: "FULL_MONEY" | "HYBRID";
+  idempotency_key: string;
+};
+
+async function getWorkshopPaymentByIdempotencyKey(input: {
+  user_id: string;
+  idempotency_key: string;
+}) {
+  return prisma.workshopPayment.findUnique({
+    where: {
+      user_id_idempotency_key: {
+        user_id: input.user_id,
+        idempotency_key: input.idempotency_key,
+      },
+    },
+  });
+}
+
+async function createOrGetPendingWorkshopPayment(
+  payload: CreateWorkshopPaymentPayload,
+) {
+  try {
+    return await prisma.workshopPayment.create({
+      data: {
+        user: { connect: { id: payload.user_id } },
+        workshop: { connect: { id: payload.workshop_id } },
+        order_id: payload.order_id,
+        idempotency_key: payload.idempotency_key,
+        amount: payload.amount,
+        credit_used: payload.credit_used,
+        payment_method: payload.payment_method,
+        status: "PENDING",
+        snap_request_status: "NOT_STARTED",
+      },
+    });
+  } catch (err) {
+    if (
+      err instanceof Prisma.PrismaClientKnownRequestError &&
+      err.code === "P2002"
+    ) {
+      const existing = await getWorkshopPaymentByIdempotencyKey({
+        user_id: payload.user_id,
+        idempotency_key: payload.idempotency_key,
+      });
+      if (existing) return existing;
+    }
+    throw err;
+  }
+}
+
+async function tryStartWorkshopSnapRequest(paymentId: string) {
+  const result = await prisma.workshopPayment.updateMany({
+    where: {
+      id: paymentId,
+      snap_request_status: "NOT_STARTED",
+    },
+    data: {
+      snap_request_status: "IN_PROGRESS",
+      snap_error: null,
+    },
+  });
+  return result.count === 1;
+}
+
+async function markWorkshopSnapCompleted(input: {
+  paymentId: string;
+  transaction_token: string;
+}) {
+  return prisma.workshopPayment.update({
+    where: { id: input.paymentId },
+    data: {
+      transaction_token: input.transaction_token,
+      snap_request_status: "COMPLETED",
+      snap_error: null,
+    },
+  });
+}
+
+async function markWorkshopSnapFailed(input: {
+  paymentId: string;
+  error: string;
+}) {
+  return prisma.workshopPayment.update({
+    where: { id: input.paymentId },
+    data: {
+      snap_request_status: "FAILED",
+      snap_error: input.error,
+    },
+  });
+}
+
+async function getWorkshopPaymentById(paymentId: string) {
+  return prisma.workshopPayment.findUnique({
+    where: { id: paymentId },
+  });
+}

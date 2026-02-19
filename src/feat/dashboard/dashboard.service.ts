@@ -87,6 +87,7 @@ const getWorkshopDetail = async (id: string) => {
     category: workshop.category,
     thumbnail: workshop.thumbnail,
     benefits: workshop.benefits,
+    price: toNumber((workshop as any).price),
     credit_price: workshop.credit_price,
     created_at: workshop.created_at.toISOString(),
     updated_at: workshop?.updated_at?.toISOString(),

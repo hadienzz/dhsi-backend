@@ -2,7 +2,8 @@
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node src/server.ts",
     "seed": "ts-node prisma/seed.ts",
-    "seed-package": "ts-node prisma/seed-package.ts"
+    "seed-package": "ts-node prisma/seed-package.ts",
+    "seed-workshop": "ts-node prisma/seed-workshop.ts"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

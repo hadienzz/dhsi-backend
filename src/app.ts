@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import { errorHandler } from "./middleware/error.middleware";
 import authRoutes from "./feat/auth/auth.route";
-import cors from "cors";
 import dashboardRoutes from "./feat/dashboard/dashboard.route";
 import workshopRoutes from "./feat/workshop/workshop.route";
 import packetRoutes from "./feat/packet/packet.route";
@@ -10,6 +10,8 @@ import paymentRoutes from "./feat/payments/payment.route";
 import handleWebhook from "./webhook/midtrans-webhook";
 import walletRoutes from "./feat/wallet/wallet.route";
 import paralegalRoute from "./feat/paralegal/paralegal.route";
+import keanggotaanRoute from "./feat/keanggotaan/keanggotaan.route";
+import advokatRoute from "./feat/advokat/advokat.route";
 import profileRoutes from "./feat/profile/profile.route";
 import calculatorRoutes from "./feat/calculator/calculator.route";
 const app = express();
@@ -32,6 +34,8 @@ app.use("/api/wallets", walletRoutes);
 app.use("/api/workshops", workshopRoutes);
 app.use("/api/calculator", calculatorRoutes);
 app.use("/api/paralegal", paralegalRoute);
+app.use("/api/keanggotaan", keanggotaanRoute);
+app.use("/api/advokat", advokatRoute);
 app.use("/api/profile", profileRoutes);
 
 app.use("/api/webhook/midtrans", handleWebhook);

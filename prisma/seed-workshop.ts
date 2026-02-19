@@ -1,41 +1,42 @@
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../generated/prisma/client";
+import { Prisma, PrismaClient } from "../generated/prisma/client";
 import { envConfig } from "../src/config/load-env";
+import bcrypt from "bcrypt";
 
-const pool = new Pool({
-  connectionString: envConfig.DATABASE_DIRECT_URL,
-});
-
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
-
-async function main() {
+export async function seedWorkshops(prismaClient: PrismaClient) {
   console.log("🗑️  Cleaning old workshop data...");
-  await prisma.workshopModuleProgress.deleteMany({});
-  await prisma.workshopModule.deleteMany({});
-  await prisma.workshopRating.deleteMany({});
-  await prisma.likedWorkshop.deleteMany({});
-  await prisma.workshopCreditPurchase.deleteMany({});
-  await prisma.selectedWorkshop.deleteMany({});
-  await prisma.workshop.deleteMany({});
+  await prismaClient.workshopModuleProgress.deleteMany({});
+  await prismaClient.workshopPayment.deleteMany({});
+  await prismaClient.workshopCreditPurchase.deleteMany({});
+  await prismaClient.workshopRating.deleteMany({});
+  await prismaClient.likedWorkshop.deleteMany({});
+  await prismaClient.selectedWorkshop.deleteMany({});
+  await prismaClient.workshopModule.deleteMany({});
+  await prismaClient.workshop.deleteMany({});
   console.log("✅ Old data cleaned.\n");
 
   console.log("🌱 Seeding workshops...");
 
-  const admin = await prisma.user.findFirst({
-    where: { role: "admin" },
-  });
+  const admin = await prismaClient.user.findFirst({ where: { role: "admin" } });
+  const anyUser = admin ?? (await prismaClient.user.findFirst());
 
-  if (!admin) {
-    console.error("❌ No admin user found. Run seed.ts first.");
-    process.exit(1);
-  }
+  const seedUser =
+    anyUser ??
+    (await prismaClient.user.create({
+      data: {
+        email: "admin@dhsi.com",
+        username: "Admin DHSI",
+        password: await bcrypt.hash("admin123", 10),
+        phone: "081234567890",
+        role: "admin",
+      },
+    }));
 
-  console.log(`📌 Using admin: ${admin.email} (${admin.id})`);
+  console.log(`📌 Using user: ${seedUser.email} (${seedUser.id})`);
 
   // ─── Workshop 1: Dasar Hukum Siber Indonesia ───
-  const ws1 = await prisma.workshop.create({
+  const ws1 = await prismaClient.workshop.create({
     data: {
       title: "Dasar Hukum Siber Indonesia",
       description:
@@ -51,12 +52,13 @@ async function main() {
         "Praktik penanganan kasus hukum siber",
         "Studi kasus terkini hukum siber",
       ],
-      credit_price: 50,
-      user_id: admin.id,
+      credit_price: 250,
+      user_id: seedUser.id,
+      price: 250000,
     },
   });
 
-  await prisma.workshopModule.createMany({
+  await prismaClient.workshopModule.createMany({
     data: [
       {
         // video_discussion → YouTube + Zoom diskusi
@@ -119,7 +121,7 @@ async function main() {
   console.log(`✅ Workshop 1: "${ws1.title}" — 4 modules`);
 
   // ─── Workshop 2: Perlindungan Data Pribadi (PDP) ───
-  const ws2 = await prisma.workshop.create({
+  const ws2 = await prismaClient.workshop.create({
     data: {
       title: "Perlindungan Data Pribadi (PDP)",
       description:
@@ -136,12 +138,13 @@ async function main() {
         "Menangani data breach sesuai regulasi",
         "Studi kasus GDPR vs UU PDP",
       ],
-      credit_price: 75,
-      user_id: admin.id,
+      credit_price: 500,
+      user_id: seedUser.id,
+      price: 500000,
     },
   });
 
-  await prisma.workshopModule.createMany({
+  await prismaClient.workshopModule.createMany({
     data: [
       {
         // video_discussion → YouTube + Zoom diskusi
@@ -219,7 +222,7 @@ async function main() {
   console.log(`✅ Workshop 2: "${ws2.title}" — 5 modules`);
 
   // ─── Workshop 3: Keamanan Siber untuk Praktisi Hukum ───
-  const ws3 = await prisma.workshop.create({
+  const ws3 = await prismaClient.workshop.create({
     data: {
       title: "Keamanan Siber untuk Praktisi Hukum",
       description:
@@ -234,12 +237,13 @@ async function main() {
         "Memahami digital forensics dasar",
         "Menangani bukti digital di pengadilan",
       ],
-      credit_price: 60,
-      user_id: admin.id,
+      credit_price: 300,
+      user_id: seedUser.id,
+      price: 300000,
     },
   });
 
-  await prisma.workshopModule.createMany({
+  await prismaClient.workshopModule.createMany({
     data: [
       {
         // video_discussion → YouTube + Zoom diskusi
@@ -289,11 +293,22 @@ async function main() {
   console.log("\n🎉 Workshop seeding completed!");
 }
 
-main()
-  .catch((e) => {
+async function main() {
+  const pool = new Pool({
+    connectionString: envConfig.DATABASE_DIRECT_URL,
+  });
+  const adapter = new PrismaPg(pool);
+  const prisma = new PrismaClient({ adapter });
+
+  await seedWorkshops(prisma);
+
+  await prisma.$disconnect();
+  await pool.end();
+}
+
+if (require.main === module) {
+  main().catch((e) => {
     console.error("❌ Seed failed:", e);
     process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
   });
+}

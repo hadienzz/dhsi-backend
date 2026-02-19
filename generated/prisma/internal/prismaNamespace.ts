@@ -398,7 +398,10 @@ export const ModelName = {
   PricingPackage: 'PricingPackage',
   PackagePayment: 'PackagePayment',
   WorkshopCreditPurchase: 'WorkshopCreditPurchase',
+  WorkshopPayment: 'WorkshopPayment',
   ParalegalDHSI: 'ParalegalDHSI',
+  KeanggotaanDHSI: 'KeanggotaanDHSI',
+  AdvokatDHSI: 'AdvokatDHSI',
   CalculatorUsages: 'CalculatorUsages'
 } as const
 
@@ -415,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "emailVerification" | "refreshToken" | "workshop" | "workshopModule" | "workshopModuleProgress" | "selectedWorkshop" | "workshopRating" | "likedWorkshop" | "userWallet" | "creditTransaction" | "pricingPackage" | "packagePayment" | "workshopCreditPurchase" | "paralegalDHSI" | "calculatorUsages"
+    modelProps: "user" | "emailVerification" | "refreshToken" | "workshop" | "workshopModule" | "workshopModuleProgress" | "selectedWorkshop" | "workshopRating" | "likedWorkshop" | "userWallet" | "creditTransaction" | "pricingPackage" | "packagePayment" | "workshopCreditPurchase" | "workshopPayment" | "paralegalDHSI" | "keanggotaanDHSI" | "advokatDHSI" | "calculatorUsages"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1455,6 +1458,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    WorkshopPayment: {
+      payload: Prisma.$WorkshopPaymentPayload<ExtArgs>
+      fields: Prisma.WorkshopPaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WorkshopPaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WorkshopPaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.WorkshopPaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WorkshopPaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload>
+        }
+        findMany: {
+          args: Prisma.WorkshopPaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload>[]
+        }
+        create: {
+          args: Prisma.WorkshopPaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload>
+        }
+        createMany: {
+          args: Prisma.WorkshopPaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WorkshopPaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.WorkshopPaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload>
+        }
+        update: {
+          args: Prisma.WorkshopPaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.WorkshopPaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WorkshopPaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WorkshopPaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.WorkshopPaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WorkshopPaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.WorkshopPaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWorkshopPayment>
+        }
+        groupBy: {
+          args: Prisma.WorkshopPaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkshopPaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WorkshopPaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WorkshopPaymentCountAggregateOutputType> | number
+        }
+      }
+    }
     ParalegalDHSI: {
       payload: Prisma.$ParalegalDHSIPayload<ExtArgs>
       fields: Prisma.ParalegalDHSIFieldRefs
@@ -1526,6 +1603,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ParalegalDHSICountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ParalegalDHSICountAggregateOutputType> | number
+        }
+      }
+    }
+    KeanggotaanDHSI: {
+      payload: Prisma.$KeanggotaanDHSIPayload<ExtArgs>
+      fields: Prisma.KeanggotaanDHSIFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KeanggotaanDHSIFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KeanggotaanDHSIFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload>
+        }
+        findFirst: {
+          args: Prisma.KeanggotaanDHSIFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KeanggotaanDHSIFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload>
+        }
+        findMany: {
+          args: Prisma.KeanggotaanDHSIFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload>[]
+        }
+        create: {
+          args: Prisma.KeanggotaanDHSICreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload>
+        }
+        createMany: {
+          args: Prisma.KeanggotaanDHSICreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KeanggotaanDHSICreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload>[]
+        }
+        delete: {
+          args: Prisma.KeanggotaanDHSIDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload>
+        }
+        update: {
+          args: Prisma.KeanggotaanDHSIUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload>
+        }
+        deleteMany: {
+          args: Prisma.KeanggotaanDHSIDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KeanggotaanDHSIUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KeanggotaanDHSIUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload>[]
+        }
+        upsert: {
+          args: Prisma.KeanggotaanDHSIUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeanggotaanDHSIPayload>
+        }
+        aggregate: {
+          args: Prisma.KeanggotaanDHSIAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKeanggotaanDHSI>
+        }
+        groupBy: {
+          args: Prisma.KeanggotaanDHSIGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KeanggotaanDHSIGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KeanggotaanDHSICountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KeanggotaanDHSICountAggregateOutputType> | number
+        }
+      }
+    }
+    AdvokatDHSI: {
+      payload: Prisma.$AdvokatDHSIPayload<ExtArgs>
+      fields: Prisma.AdvokatDHSIFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdvokatDHSIFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdvokatDHSIFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload>
+        }
+        findFirst: {
+          args: Prisma.AdvokatDHSIFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdvokatDHSIFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload>
+        }
+        findMany: {
+          args: Prisma.AdvokatDHSIFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload>[]
+        }
+        create: {
+          args: Prisma.AdvokatDHSICreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload>
+        }
+        createMany: {
+          args: Prisma.AdvokatDHSICreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AdvokatDHSICreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload>[]
+        }
+        delete: {
+          args: Prisma.AdvokatDHSIDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload>
+        }
+        update: {
+          args: Prisma.AdvokatDHSIUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload>
+        }
+        deleteMany: {
+          args: Prisma.AdvokatDHSIDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdvokatDHSIUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AdvokatDHSIUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload>[]
+        }
+        upsert: {
+          args: Prisma.AdvokatDHSIUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdvokatDHSIPayload>
+        }
+        aggregate: {
+          args: Prisma.AdvokatDHSIAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdvokatDHSI>
+        }
+        groupBy: {
+          args: Prisma.AdvokatDHSIGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdvokatDHSIGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdvokatDHSICountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdvokatDHSICountAggregateOutputType> | number
         }
       }
     }
@@ -1699,6 +1924,7 @@ export const WorkshopScalarFieldEnum = {
   benefits: 'benefits',
   category: 'category',
   short_description: 'short_description',
+  price: 'price',
   credit_price: 'credit_price',
   user_id: 'user_id',
   created_at: 'created_at',
@@ -1852,6 +2078,26 @@ export const WorkshopCreditPurchaseScalarFieldEnum = {
 export type WorkshopCreditPurchaseScalarFieldEnum = (typeof WorkshopCreditPurchaseScalarFieldEnum)[keyof typeof WorkshopCreditPurchaseScalarFieldEnum]
 
 
+export const WorkshopPaymentScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  workshop_id: 'workshop_id',
+  order_id: 'order_id',
+  transaction_token: 'transaction_token',
+  amount: 'amount',
+  credit_used: 'credit_used',
+  payment_method: 'payment_method',
+  status: 'status',
+  idempotency_key: 'idempotency_key',
+  snap_request_status: 'snap_request_status',
+  snap_error: 'snap_error',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type WorkshopPaymentScalarFieldEnum = (typeof WorkshopPaymentScalarFieldEnum)[keyof typeof WorkshopPaymentScalarFieldEnum]
+
+
 export const ParalegalDHSIScalarFieldEnum = {
   id: 'id',
   email_address: 'email_address',
@@ -1862,6 +2108,26 @@ export const ParalegalDHSIScalarFieldEnum = {
 } as const
 
 export type ParalegalDHSIScalarFieldEnum = (typeof ParalegalDHSIScalarFieldEnum)[keyof typeof ParalegalDHSIScalarFieldEnum]
+
+
+export const KeanggotaanDHSIScalarFieldEnum = {
+  id: 'id',
+  nama_lengkap: 'nama_lengkap',
+  role: 'role',
+  upload_foto_formal: 'upload_foto_formal'
+} as const
+
+export type KeanggotaanDHSIScalarFieldEnum = (typeof KeanggotaanDHSIScalarFieldEnum)[keyof typeof KeanggotaanDHSIScalarFieldEnum]
+
+
+export const AdvokatDHSIScalarFieldEnum = {
+  id: 'id',
+  nama_lengkap: 'nama_lengkap',
+  role: 'role',
+  upload_foto_formal: 'upload_foto_formal'
+} as const
+
+export type AdvokatDHSIScalarFieldEnum = (typeof AdvokatDHSIScalarFieldEnum)[keyof typeof AdvokatDHSIScalarFieldEnum]
 
 
 export const CalculatorUsagesScalarFieldEnum = {
@@ -2025,6 +2291,20 @@ export type ListEnumSnapRequestStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'WorkshopPaymentMethod'
+ */
+export type EnumWorkshopPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorkshopPaymentMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'WorkshopPaymentMethod[]'
+ */
+export type ListEnumWorkshopPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WorkshopPaymentMethod[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2146,7 +2426,10 @@ export type GlobalOmitConfig = {
   pricingPackage?: Prisma.PricingPackageOmit
   packagePayment?: Prisma.PackagePaymentOmit
   workshopCreditPurchase?: Prisma.WorkshopCreditPurchaseOmit
+  workshopPayment?: Prisma.WorkshopPaymentOmit
   paralegalDHSI?: Prisma.ParalegalDHSIOmit
+  keanggotaanDHSI?: Prisma.KeanggotaanDHSIOmit
+  advokatDHSI?: Prisma.AdvokatDHSIOmit
   calculatorUsages?: Prisma.CalculatorUsagesOmit
 }
 

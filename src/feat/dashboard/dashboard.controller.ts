@@ -20,6 +20,7 @@ const createWorkshop = async (
       title,
       benefits,
       description,
+      price,
       credit_price,
     } = req.body as z.infer<typeof createWorkshopSchema>;
     const user_id = req.user?.id as string;
@@ -36,6 +37,7 @@ const createWorkshop = async (
       thumbnail: "",
       benefits,
       description,
+      price,
       credit_price,
       user_id,
     };
