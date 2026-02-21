@@ -109,7 +109,42 @@ export const getWorkshops = async (
   next: NextFunction,
 ) => {
   try {
-    const workshops = await workshopRepository.getPublicWorkshops();
+    const rawWorkshops = await workshopRepository.getPublicWorkshops();
+
+    const workshops = rawWorkshops.map((w) => {
+      const ratingsArr = w.ratings.map((r) => r.rating);
+      const avgRating =
+        ratingsArr.length > 0
+          ? parseFloat(
+              (ratingsArr.reduce((a, b) => a + b, 0) / ratingsArr.length).toFixed(1),
+            )
+          : 0;
+
+      return {
+        id: w.id,
+        title: w.title,
+        short_description: w.short_description,
+        description: w.description,
+        category: w.category,
+        thumbnail: w.thumbnail,
+        price: w.price,
+        credit_price: w.credit_price,
+        benefits: w.benefits,
+        start_date: w.start_date ?? w.modules[0]?.schedule_at ?? null,
+        created_at: w.created_at,
+        participant_count: w._count.selected_users,
+        avg_rating: avgRating,
+        rating_count: ratingsArr.length,
+        module_count: w.modules.length,
+        modules: w.modules.map((m) => ({
+          id: m.id,
+          title: m.title,
+          schedule_at: m.schedule_at,
+          type: m.type,
+          order: m.order,
+        })),
+      };
+    });
 
     return res.status(200).json({
       status: "success",

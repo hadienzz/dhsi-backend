@@ -401,6 +401,7 @@ export const ModelName = {
   WorkshopPayment: 'WorkshopPayment',
   ParalegalDHSI: 'ParalegalDHSI',
   KeanggotaanDHSI: 'KeanggotaanDHSI',
+  PesertaPelatihan: 'PesertaPelatihan',
   AdvokatDHSI: 'AdvokatDHSI',
   CalculatorUsages: 'CalculatorUsages'
 } as const
@@ -418,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "emailVerification" | "refreshToken" | "workshop" | "workshopModule" | "workshopModuleProgress" | "selectedWorkshop" | "workshopRating" | "likedWorkshop" | "userWallet" | "creditTransaction" | "pricingPackage" | "packagePayment" | "workshopCreditPurchase" | "workshopPayment" | "paralegalDHSI" | "keanggotaanDHSI" | "advokatDHSI" | "calculatorUsages"
+    modelProps: "user" | "emailVerification" | "refreshToken" | "workshop" | "workshopModule" | "workshopModuleProgress" | "selectedWorkshop" | "workshopRating" | "likedWorkshop" | "userWallet" | "creditTransaction" | "pricingPackage" | "packagePayment" | "workshopCreditPurchase" | "workshopPayment" | "paralegalDHSI" | "keanggotaanDHSI" | "pesertaPelatihan" | "advokatDHSI" | "calculatorUsages"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1680,6 +1681,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PesertaPelatihan: {
+      payload: Prisma.$PesertaPelatihanPayload<ExtArgs>
+      fields: Prisma.PesertaPelatihanFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PesertaPelatihanFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PesertaPelatihanFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload>
+        }
+        findFirst: {
+          args: Prisma.PesertaPelatihanFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PesertaPelatihanFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload>
+        }
+        findMany: {
+          args: Prisma.PesertaPelatihanFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload>[]
+        }
+        create: {
+          args: Prisma.PesertaPelatihanCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload>
+        }
+        createMany: {
+          args: Prisma.PesertaPelatihanCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PesertaPelatihanCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload>[]
+        }
+        delete: {
+          args: Prisma.PesertaPelatihanDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload>
+        }
+        update: {
+          args: Prisma.PesertaPelatihanUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload>
+        }
+        deleteMany: {
+          args: Prisma.PesertaPelatihanDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PesertaPelatihanUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PesertaPelatihanUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload>[]
+        }
+        upsert: {
+          args: Prisma.PesertaPelatihanUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PesertaPelatihanPayload>
+        }
+        aggregate: {
+          args: Prisma.PesertaPelatihanAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePesertaPelatihan>
+        }
+        groupBy: {
+          args: Prisma.PesertaPelatihanGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PesertaPelatihanGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PesertaPelatihanCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PesertaPelatihanCountAggregateOutputType> | number
+        }
+      }
+    }
     AdvokatDHSI: {
       payload: Prisma.$AdvokatDHSIPayload<ExtArgs>
       fields: Prisma.AdvokatDHSIFieldRefs
@@ -1924,6 +1999,7 @@ export const WorkshopScalarFieldEnum = {
   benefits: 'benefits',
   category: 'category',
   short_description: 'short_description',
+  start_date: 'start_date',
   price: 'price',
   credit_price: 'credit_price',
   user_id: 'user_id',
@@ -2114,10 +2190,22 @@ export const KeanggotaanDHSIScalarFieldEnum = {
   id: 'id',
   nama_lengkap: 'nama_lengkap',
   role: 'role',
+  kategori: 'kategori',
   upload_foto_formal: 'upload_foto_formal'
 } as const
 
 export type KeanggotaanDHSIScalarFieldEnum = (typeof KeanggotaanDHSIScalarFieldEnum)[keyof typeof KeanggotaanDHSIScalarFieldEnum]
+
+
+export const PesertaPelatihanScalarFieldEnum = {
+  id: 'id',
+  nama_lengkap: 'nama_lengkap',
+  email: 'email',
+  nama_pelatihan: 'nama_pelatihan',
+  created_at: 'created_at'
+} as const
+
+export type PesertaPelatihanScalarFieldEnum = (typeof PesertaPelatihanScalarFieldEnum)[keyof typeof PesertaPelatihanScalarFieldEnum]
 
 
 export const AdvokatDHSIScalarFieldEnum = {
@@ -2429,6 +2517,7 @@ export type GlobalOmitConfig = {
   workshopPayment?: Prisma.WorkshopPaymentOmit
   paralegalDHSI?: Prisma.ParalegalDHSIOmit
   keanggotaanDHSI?: Prisma.KeanggotaanDHSIOmit
+  pesertaPelatihan?: Prisma.PesertaPelatihanOmit
   advokatDHSI?: Prisma.AdvokatDHSIOmit
   calculatorUsages?: Prisma.CalculatorUsagesOmit
 }

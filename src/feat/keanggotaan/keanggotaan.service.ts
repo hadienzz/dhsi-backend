@@ -7,6 +7,7 @@ const getAll = async () => {
 const create = async (data: {
   nama_lengkap: string;
   role: string;
+  kategori: string;
   upload_foto_formal: string;
 }) => {
   return await keanggotaanRepository.create(data);
@@ -20,7 +21,7 @@ const deleteById = async (id: string) => {
 
 const update = async (
   id: string,
-  data: { nama_lengkap?: string; role?: string; upload_foto_formal?: string },
+  data: { nama_lengkap?: string; role?: string; kategori?: string; upload_foto_formal?: string },
 ) => {
   const existing = await keanggotaanRepository.findById(id);
   if (!existing) throw new Error("Keanggotaan not found");

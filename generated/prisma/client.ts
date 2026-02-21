@@ -123,6 +123,11 @@ export type ParalegalDHSI = Prisma.ParalegalDHSIModel
  */
 export type KeanggotaanDHSI = Prisma.KeanggotaanDHSIModel
 /**
+ * Model PesertaPelatihan
+ * 
+ */
+export type PesertaPelatihan = Prisma.PesertaPelatihanModel
+/**
  * Model AdvokatDHSI
  * 
  */

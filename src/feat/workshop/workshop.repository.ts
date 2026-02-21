@@ -29,7 +29,24 @@ const getPublicWorkshops = () => {
       price: true,
       credit_price: true,
       benefits: true,
+      start_date: true,
       created_at: true,
+      _count: {
+        select: { selected_users: true },
+      },
+      ratings: {
+        select: { rating: true },
+      },
+      modules: {
+        orderBy: { schedule_at: "asc" },
+        select: {
+          id: true,
+          title: true,
+          schedule_at: true,
+          type: true,
+          order: true,
+        },
+      },
     },
   });
 };

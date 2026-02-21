@@ -155,6 +155,8 @@ model Workshop {
 
   short_description String
 
+  start_date DateTime?
+
   price        Int
   credit_price Int
 
@@ -464,9 +466,20 @@ model KeanggotaanDHSI {
   id                 String @id @default(uuid()) @db.Uuid
   nama_lengkap       String
   role               String
+  kategori           String @default("Direksi")
   upload_foto_formal String
 
   @@map("keanggotaan_dhsi")
+}
+
+model PesertaPelatihan {
+  id             String   @id @default(uuid()) @db.Uuid
+  nama_lengkap   String
+  email          String
+  nama_pelatihan String
+  created_at     DateTime @default(now())
+
+  @@map("peserta_pelatihan")
 }
 
 model AdvokatDHSI {

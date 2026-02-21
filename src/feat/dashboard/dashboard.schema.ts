@@ -13,6 +13,7 @@ export const createWorkshopSchema = z.object({
   ),
   category: z.string(),
   description: z.string(),
+  start_date: z.string().optional(),
   price: z.coerce.number().int().min(1),
   credit_price: z.coerce.number().int().min(1),
 });

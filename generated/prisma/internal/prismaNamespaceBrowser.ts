@@ -68,6 +68,7 @@ export const ModelName = {
   WorkshopPayment: 'WorkshopPayment',
   ParalegalDHSI: 'ParalegalDHSI',
   KeanggotaanDHSI: 'KeanggotaanDHSI',
+  PesertaPelatihan: 'PesertaPelatihan',
   AdvokatDHSI: 'AdvokatDHSI',
   CalculatorUsages: 'CalculatorUsages'
 } as const
@@ -145,6 +146,7 @@ export const WorkshopScalarFieldEnum = {
   benefits: 'benefits',
   category: 'category',
   short_description: 'short_description',
+  start_date: 'start_date',
   price: 'price',
   credit_price: 'credit_price',
   user_id: 'user_id',
@@ -335,10 +337,22 @@ export const KeanggotaanDHSIScalarFieldEnum = {
   id: 'id',
   nama_lengkap: 'nama_lengkap',
   role: 'role',
+  kategori: 'kategori',
   upload_foto_formal: 'upload_foto_formal'
 } as const
 
 export type KeanggotaanDHSIScalarFieldEnum = (typeof KeanggotaanDHSIScalarFieldEnum)[keyof typeof KeanggotaanDHSIScalarFieldEnum]
+
+
+export const PesertaPelatihanScalarFieldEnum = {
+  id: 'id',
+  nama_lengkap: 'nama_lengkap',
+  email: 'email',
+  nama_pelatihan: 'nama_pelatihan',
+  created_at: 'created_at'
+} as const
+
+export type PesertaPelatihanScalarFieldEnum = (typeof PesertaPelatihanScalarFieldEnum)[keyof typeof PesertaPelatihanScalarFieldEnum]
 
 
 export const AdvokatDHSIScalarFieldEnum = {
