@@ -14,9 +14,11 @@ const createPayment = async (
     const email = req.user?.email!;
     const { package_id } = req.body;
     const rawKey = req.header("Idempotency-Key")?.trim();
+
     if (!rawKey) {
       throw new APIError("Idempotency-Key header is required", 400);
     }
+
     const idempotency_key = rawKey;
 
     const result = await paymentService.createPayment({

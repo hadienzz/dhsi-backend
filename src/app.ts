@@ -14,6 +14,7 @@ import keanggotaanRoute from "./feat/keanggotaan/keanggotaan.route";
 import advokatRoute from "./feat/advokat/advokat.route";
 import profileRoutes from "./feat/profile/profile.route";
 import calculatorRoutes from "./feat/calculator/calculator.route";
+import pesertaPelatihanRoute from "./feat/peserta-pelatihan/peserta-pelatihan.route";
 const app = express();
 
 app.use(
@@ -37,6 +38,7 @@ app.use("/api/paralegal", paralegalRoute);
 app.use("/api/keanggotaan", keanggotaanRoute);
 app.use("/api/advokat", advokatRoute);
 app.use("/api/profile", profileRoutes);
+app.use("/api/peserta-pelatihan", pesertaPelatihanRoute);
 
 app.use("/api/webhook/midtrans", handleWebhook);
 app.get("/api/health", (req: Request, res: Response, next: NextFunction) => {

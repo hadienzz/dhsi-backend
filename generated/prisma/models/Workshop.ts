@@ -43,6 +43,7 @@ export type WorkshopMinAggregateOutputType = {
   thumbnail: string | null
   category: string | null
   short_description: string | null
+  start_date: Date | null
   price: number | null
   credit_price: number | null
   user_id: string | null
@@ -58,6 +59,7 @@ export type WorkshopMaxAggregateOutputType = {
   thumbnail: string | null
   category: string | null
   short_description: string | null
+  start_date: Date | null
   price: number | null
   credit_price: number | null
   user_id: string | null
@@ -74,6 +76,7 @@ export type WorkshopCountAggregateOutputType = {
   benefits: number
   category: number
   short_description: number
+  start_date: number
   price: number
   credit_price: number
   user_id: number
@@ -101,6 +104,7 @@ export type WorkshopMinAggregateInputType = {
   thumbnail?: true
   category?: true
   short_description?: true
+  start_date?: true
   price?: true
   credit_price?: true
   user_id?: true
@@ -116,6 +120,7 @@ export type WorkshopMaxAggregateInputType = {
   thumbnail?: true
   category?: true
   short_description?: true
+  start_date?: true
   price?: true
   credit_price?: true
   user_id?: true
@@ -132,6 +137,7 @@ export type WorkshopCountAggregateInputType = {
   benefits?: true
   category?: true
   short_description?: true
+  start_date?: true
   price?: true
   credit_price?: true
   user_id?: true
@@ -235,6 +241,7 @@ export type WorkshopGroupByOutputType = {
   benefits: string[]
   category: string
   short_description: string
+  start_date: Date | null
   price: number
   credit_price: number
   user_id: string
@@ -274,6 +281,7 @@ export type WorkshopWhereInput = {
   benefits?: Prisma.StringNullableListFilter<"Workshop">
   category?: Prisma.StringFilter<"Workshop"> | string
   short_description?: Prisma.StringFilter<"Workshop"> | string
+  start_date?: Prisma.DateTimeNullableFilter<"Workshop"> | Date | string | null
   price?: Prisma.IntFilter<"Workshop"> | number
   credit_price?: Prisma.IntFilter<"Workshop"> | number
   user_id?: Prisma.UuidFilter<"Workshop"> | string
@@ -297,6 +305,7 @@ export type WorkshopOrderByWithRelationInput = {
   benefits?: Prisma.SortOrder
   category?: Prisma.SortOrder
   short_description?: Prisma.SortOrder
+  start_date?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrder
   credit_price?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -323,6 +332,7 @@ export type WorkshopWhereUniqueInput = Prisma.AtLeast<{
   benefits?: Prisma.StringNullableListFilter<"Workshop">
   category?: Prisma.StringFilter<"Workshop"> | string
   short_description?: Prisma.StringFilter<"Workshop"> | string
+  start_date?: Prisma.DateTimeNullableFilter<"Workshop"> | Date | string | null
   price?: Prisma.IntFilter<"Workshop"> | number
   credit_price?: Prisma.IntFilter<"Workshop"> | number
   user_id?: Prisma.UuidFilter<"Workshop"> | string
@@ -346,6 +356,7 @@ export type WorkshopOrderByWithAggregationInput = {
   benefits?: Prisma.SortOrder
   category?: Prisma.SortOrder
   short_description?: Prisma.SortOrder
+  start_date?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrder
   credit_price?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -370,6 +381,7 @@ export type WorkshopScalarWhereWithAggregatesInput = {
   benefits?: Prisma.StringNullableListFilter<"Workshop">
   category?: Prisma.StringWithAggregatesFilter<"Workshop"> | string
   short_description?: Prisma.StringWithAggregatesFilter<"Workshop"> | string
+  start_date?: Prisma.DateTimeNullableWithAggregatesFilter<"Workshop"> | Date | string | null
   price?: Prisma.IntWithAggregatesFilter<"Workshop"> | number
   credit_price?: Prisma.IntWithAggregatesFilter<"Workshop"> | number
   user_id?: Prisma.UuidWithAggregatesFilter<"Workshop"> | string
@@ -386,6 +398,7 @@ export type WorkshopCreateInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   created_at?: Date | string
@@ -408,6 +421,7 @@ export type WorkshopUncheckedCreateInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   user_id: string
@@ -430,6 +444,7 @@ export type WorkshopUpdateInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -452,6 +467,7 @@ export type WorkshopUncheckedUpdateInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -474,6 +490,7 @@ export type WorkshopCreateManyInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   user_id: string
@@ -490,6 +507,7 @@ export type WorkshopUpdateManyMutationInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -505,6 +523,7 @@ export type WorkshopUncheckedUpdateManyInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -539,6 +558,7 @@ export type WorkshopCountOrderByAggregateInput = {
   benefits?: Prisma.SortOrder
   category?: Prisma.SortOrder
   short_description?: Prisma.SortOrder
+  start_date?: Prisma.SortOrder
   price?: Prisma.SortOrder
   credit_price?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -559,6 +579,7 @@ export type WorkshopMaxOrderByAggregateInput = {
   thumbnail?: Prisma.SortOrder
   category?: Prisma.SortOrder
   short_description?: Prisma.SortOrder
+  start_date?: Prisma.SortOrder
   price?: Prisma.SortOrder
   credit_price?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -574,6 +595,7 @@ export type WorkshopMinOrderByAggregateInput = {
   thumbnail?: Prisma.SortOrder
   category?: Prisma.SortOrder
   short_description?: Prisma.SortOrder
+  start_date?: Prisma.SortOrder
   price?: Prisma.SortOrder
   credit_price?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -743,6 +765,7 @@ export type WorkshopCreateWithoutUserInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   created_at?: Date | string
@@ -764,6 +787,7 @@ export type WorkshopUncheckedCreateWithoutUserInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   created_at?: Date | string
@@ -814,6 +838,7 @@ export type WorkshopScalarWhereInput = {
   benefits?: Prisma.StringNullableListFilter<"Workshop">
   category?: Prisma.StringFilter<"Workshop"> | string
   short_description?: Prisma.StringFilter<"Workshop"> | string
+  start_date?: Prisma.DateTimeNullableFilter<"Workshop"> | Date | string | null
   price?: Prisma.IntFilter<"Workshop"> | number
   credit_price?: Prisma.IntFilter<"Workshop"> | number
   user_id?: Prisma.UuidFilter<"Workshop"> | string
@@ -830,6 +855,7 @@ export type WorkshopCreateWithoutModulesInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   created_at?: Date | string
@@ -851,6 +877,7 @@ export type WorkshopUncheckedCreateWithoutModulesInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   user_id: string
@@ -888,6 +915,7 @@ export type WorkshopUpdateWithoutModulesInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -909,6 +937,7 @@ export type WorkshopUncheckedUpdateWithoutModulesInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -930,6 +959,7 @@ export type WorkshopCreateWithoutSelected_usersInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   created_at?: Date | string
@@ -951,6 +981,7 @@ export type WorkshopUncheckedCreateWithoutSelected_usersInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   user_id: string
@@ -988,6 +1019,7 @@ export type WorkshopUpdateWithoutSelected_usersInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1009,6 +1041,7 @@ export type WorkshopUncheckedUpdateWithoutSelected_usersInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1030,6 +1063,7 @@ export type WorkshopCreateWithoutRatingsInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   created_at?: Date | string
@@ -1051,6 +1085,7 @@ export type WorkshopUncheckedCreateWithoutRatingsInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   user_id: string
@@ -1088,6 +1123,7 @@ export type WorkshopUpdateWithoutRatingsInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1109,6 +1145,7 @@ export type WorkshopUncheckedUpdateWithoutRatingsInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1130,6 +1167,7 @@ export type WorkshopCreateWithoutLiked_usersInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   created_at?: Date | string
@@ -1151,6 +1189,7 @@ export type WorkshopUncheckedCreateWithoutLiked_usersInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   user_id: string
@@ -1188,6 +1227,7 @@ export type WorkshopUpdateWithoutLiked_usersInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1209,6 +1249,7 @@ export type WorkshopUncheckedUpdateWithoutLiked_usersInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1230,6 +1271,7 @@ export type WorkshopCreateWithoutCredit_purchasesInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   created_at?: Date | string
@@ -1251,6 +1293,7 @@ export type WorkshopUncheckedCreateWithoutCredit_purchasesInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   user_id: string
@@ -1288,6 +1331,7 @@ export type WorkshopUpdateWithoutCredit_purchasesInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1309,6 +1353,7 @@ export type WorkshopUncheckedUpdateWithoutCredit_purchasesInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1330,6 +1375,7 @@ export type WorkshopCreateWithoutWorkshop_paymentsInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   created_at?: Date | string
@@ -1351,6 +1397,7 @@ export type WorkshopUncheckedCreateWithoutWorkshop_paymentsInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   user_id: string
@@ -1388,6 +1435,7 @@ export type WorkshopUpdateWithoutWorkshop_paymentsInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1409,6 +1457,7 @@ export type WorkshopUncheckedUpdateWithoutWorkshop_paymentsInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1430,6 +1479,7 @@ export type WorkshopCreateManyUserInput = {
   benefits?: Prisma.WorkshopCreatebenefitsInput | string[]
   category: string
   short_description: string
+  start_date?: Date | string | null
   price: number
   credit_price: number
   created_at?: Date | string
@@ -1445,6 +1495,7 @@ export type WorkshopUpdateWithoutUserInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1466,6 +1517,7 @@ export type WorkshopUncheckedUpdateWithoutUserInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1487,6 +1539,7 @@ export type WorkshopUncheckedUpdateManyWithoutUserInput = {
   benefits?: Prisma.WorkshopUpdatebenefitsInput | string[]
   category?: Prisma.StringFieldUpdateOperationsInput | string
   short_description?: Prisma.StringFieldUpdateOperationsInput | string
+  start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   credit_price?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1578,6 +1631,7 @@ export type WorkshopSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   benefits?: boolean
   category?: boolean
   short_description?: boolean
+  start_date?: boolean
   price?: boolean
   credit_price?: boolean
   user_id?: boolean
@@ -1602,6 +1656,7 @@ export type WorkshopSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   benefits?: boolean
   category?: boolean
   short_description?: boolean
+  start_date?: boolean
   price?: boolean
   credit_price?: boolean
   user_id?: boolean
@@ -1619,6 +1674,7 @@ export type WorkshopSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   benefits?: boolean
   category?: boolean
   short_description?: boolean
+  start_date?: boolean
   price?: boolean
   credit_price?: boolean
   user_id?: boolean
@@ -1636,6 +1692,7 @@ export type WorkshopSelectScalar = {
   benefits?: boolean
   category?: boolean
   short_description?: boolean
+  start_date?: boolean
   price?: boolean
   credit_price?: boolean
   user_id?: boolean
@@ -1644,7 +1701,7 @@ export type WorkshopSelectScalar = {
   deleted_at?: boolean
 }
 
-export type WorkshopOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "thumbnail" | "benefits" | "category" | "short_description" | "price" | "credit_price" | "user_id" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["workshop"]>
+export type WorkshopOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "thumbnail" | "benefits" | "category" | "short_description" | "start_date" | "price" | "credit_price" | "user_id" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["workshop"]>
 export type WorkshopInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   modules?: boolean | Prisma.Workshop$modulesArgs<ExtArgs>
@@ -1681,6 +1738,7 @@ export type $WorkshopPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     benefits: string[]
     category: string
     short_description: string
+    start_date: Date | null
     price: number
     credit_price: number
     user_id: string
@@ -2124,6 +2182,7 @@ export interface WorkshopFieldRefs {
   readonly benefits: Prisma.FieldRef<"Workshop", 'String[]'>
   readonly category: Prisma.FieldRef<"Workshop", 'String'>
   readonly short_description: Prisma.FieldRef<"Workshop", 'String'>
+  readonly start_date: Prisma.FieldRef<"Workshop", 'DateTime'>
   readonly price: Prisma.FieldRef<"Workshop", 'Int'>
   readonly credit_price: Prisma.FieldRef<"Workshop", 'Int'>
   readonly user_id: Prisma.FieldRef<"Workshop", 'String'>

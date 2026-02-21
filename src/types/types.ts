@@ -5,7 +5,7 @@ export type createWorkshopPayload = {
   thumbnail: string;
   benefits: string[];
   category: string;
-  // level: string;
+  start_date?: Date | null;
   price: number;
   credit_price: number;
   user_id: string;

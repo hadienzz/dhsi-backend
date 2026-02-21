@@ -6,6 +6,7 @@ const getAll = async () => {
       id: true,
       nama_lengkap: true,
       role: true,
+      kategori: true,
       upload_foto_formal: true,
     },
   });
@@ -14,6 +15,7 @@ const getAll = async () => {
 const create = async (data: {
   nama_lengkap: string;
   role: string;
+  kategori: string;
   upload_foto_formal: string;
 }) => {
   return await prisma.keanggotaanDHSI.create({ data });
@@ -29,7 +31,7 @@ const findById = async (id: string) => {
 
 const update = async (
   id: string,
-  data: { nama_lengkap?: string; role?: string; upload_foto_formal?: string },
+  data: { nama_lengkap?: string; role?: string; kategori?: string; upload_foto_formal?: string },
 ) => {
   return await prisma.keanggotaanDHSI.update({ where: { id }, data });
 };

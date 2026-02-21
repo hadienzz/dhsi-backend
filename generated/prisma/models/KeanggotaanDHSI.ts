@@ -28,6 +28,7 @@ export type KeanggotaanDHSIMinAggregateOutputType = {
   id: string | null
   nama_lengkap: string | null
   role: string | null
+  kategori: string | null
   upload_foto_formal: string | null
 }
 
@@ -35,6 +36,7 @@ export type KeanggotaanDHSIMaxAggregateOutputType = {
   id: string | null
   nama_lengkap: string | null
   role: string | null
+  kategori: string | null
   upload_foto_formal: string | null
 }
 
@@ -42,6 +44,7 @@ export type KeanggotaanDHSICountAggregateOutputType = {
   id: number
   nama_lengkap: number
   role: number
+  kategori: number
   upload_foto_formal: number
   _all: number
 }
@@ -51,6 +54,7 @@ export type KeanggotaanDHSIMinAggregateInputType = {
   id?: true
   nama_lengkap?: true
   role?: true
+  kategori?: true
   upload_foto_formal?: true
 }
 
@@ -58,6 +62,7 @@ export type KeanggotaanDHSIMaxAggregateInputType = {
   id?: true
   nama_lengkap?: true
   role?: true
+  kategori?: true
   upload_foto_formal?: true
 }
 
@@ -65,6 +70,7 @@ export type KeanggotaanDHSICountAggregateInputType = {
   id?: true
   nama_lengkap?: true
   role?: true
+  kategori?: true
   upload_foto_formal?: true
   _all?: true
 }
@@ -145,6 +151,7 @@ export type KeanggotaanDHSIGroupByOutputType = {
   id: string
   nama_lengkap: string
   role: string
+  kategori: string
   upload_foto_formal: string
   _count: KeanggotaanDHSICountAggregateOutputType | null
   _min: KeanggotaanDHSIMinAggregateOutputType | null
@@ -173,6 +180,7 @@ export type KeanggotaanDHSIWhereInput = {
   id?: Prisma.UuidFilter<"KeanggotaanDHSI"> | string
   nama_lengkap?: Prisma.StringFilter<"KeanggotaanDHSI"> | string
   role?: Prisma.StringFilter<"KeanggotaanDHSI"> | string
+  kategori?: Prisma.StringFilter<"KeanggotaanDHSI"> | string
   upload_foto_formal?: Prisma.StringFilter<"KeanggotaanDHSI"> | string
 }
 
@@ -180,6 +188,7 @@ export type KeanggotaanDHSIOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   nama_lengkap?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  kategori?: Prisma.SortOrder
   upload_foto_formal?: Prisma.SortOrder
 }
 
@@ -190,6 +199,7 @@ export type KeanggotaanDHSIWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.KeanggotaanDHSIWhereInput | Prisma.KeanggotaanDHSIWhereInput[]
   nama_lengkap?: Prisma.StringFilter<"KeanggotaanDHSI"> | string
   role?: Prisma.StringFilter<"KeanggotaanDHSI"> | string
+  kategori?: Prisma.StringFilter<"KeanggotaanDHSI"> | string
   upload_foto_formal?: Prisma.StringFilter<"KeanggotaanDHSI"> | string
 }, "id">
 
@@ -197,6 +207,7 @@ export type KeanggotaanDHSIOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   nama_lengkap?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  kategori?: Prisma.SortOrder
   upload_foto_formal?: Prisma.SortOrder
   _count?: Prisma.KeanggotaanDHSICountOrderByAggregateInput
   _max?: Prisma.KeanggotaanDHSIMaxOrderByAggregateInput
@@ -210,6 +221,7 @@ export type KeanggotaanDHSIScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"KeanggotaanDHSI"> | string
   nama_lengkap?: Prisma.StringWithAggregatesFilter<"KeanggotaanDHSI"> | string
   role?: Prisma.StringWithAggregatesFilter<"KeanggotaanDHSI"> | string
+  kategori?: Prisma.StringWithAggregatesFilter<"KeanggotaanDHSI"> | string
   upload_foto_formal?: Prisma.StringWithAggregatesFilter<"KeanggotaanDHSI"> | string
 }
 
@@ -217,6 +229,7 @@ export type KeanggotaanDHSICreateInput = {
   id?: string
   nama_lengkap: string
   role: string
+  kategori?: string
   upload_foto_formal: string
 }
 
@@ -224,6 +237,7 @@ export type KeanggotaanDHSIUncheckedCreateInput = {
   id?: string
   nama_lengkap: string
   role: string
+  kategori?: string
   upload_foto_formal: string
 }
 
@@ -231,6 +245,7 @@ export type KeanggotaanDHSIUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama_lengkap?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  kategori?: Prisma.StringFieldUpdateOperationsInput | string
   upload_foto_formal?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -238,6 +253,7 @@ export type KeanggotaanDHSIUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama_lengkap?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  kategori?: Prisma.StringFieldUpdateOperationsInput | string
   upload_foto_formal?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -245,6 +261,7 @@ export type KeanggotaanDHSICreateManyInput = {
   id?: string
   nama_lengkap: string
   role: string
+  kategori?: string
   upload_foto_formal: string
 }
 
@@ -252,6 +269,7 @@ export type KeanggotaanDHSIUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama_lengkap?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  kategori?: Prisma.StringFieldUpdateOperationsInput | string
   upload_foto_formal?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -259,6 +277,7 @@ export type KeanggotaanDHSIUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   nama_lengkap?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
+  kategori?: Prisma.StringFieldUpdateOperationsInput | string
   upload_foto_formal?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -266,6 +285,7 @@ export type KeanggotaanDHSICountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nama_lengkap?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  kategori?: Prisma.SortOrder
   upload_foto_formal?: Prisma.SortOrder
 }
 
@@ -273,6 +293,7 @@ export type KeanggotaanDHSIMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nama_lengkap?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  kategori?: Prisma.SortOrder
   upload_foto_formal?: Prisma.SortOrder
 }
 
@@ -280,6 +301,7 @@ export type KeanggotaanDHSIMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   nama_lengkap?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  kategori?: Prisma.SortOrder
   upload_foto_formal?: Prisma.SortOrder
 }
 
@@ -289,6 +311,7 @@ export type KeanggotaanDHSISelect<ExtArgs extends runtime.Types.Extensions.Inter
   id?: boolean
   nama_lengkap?: boolean
   role?: boolean
+  kategori?: boolean
   upload_foto_formal?: boolean
 }, ExtArgs["result"]["keanggotaanDHSI"]>
 
@@ -296,6 +319,7 @@ export type KeanggotaanDHSISelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   id?: boolean
   nama_lengkap?: boolean
   role?: boolean
+  kategori?: boolean
   upload_foto_formal?: boolean
 }, ExtArgs["result"]["keanggotaanDHSI"]>
 
@@ -303,6 +327,7 @@ export type KeanggotaanDHSISelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   id?: boolean
   nama_lengkap?: boolean
   role?: boolean
+  kategori?: boolean
   upload_foto_formal?: boolean
 }, ExtArgs["result"]["keanggotaanDHSI"]>
 
@@ -310,10 +335,11 @@ export type KeanggotaanDHSISelectScalar = {
   id?: boolean
   nama_lengkap?: boolean
   role?: boolean
+  kategori?: boolean
   upload_foto_formal?: boolean
 }
 
-export type KeanggotaanDHSIOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama_lengkap" | "role" | "upload_foto_formal", ExtArgs["result"]["keanggotaanDHSI"]>
+export type KeanggotaanDHSIOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama_lengkap" | "role" | "kategori" | "upload_foto_formal", ExtArgs["result"]["keanggotaanDHSI"]>
 
 export type $KeanggotaanDHSIPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "KeanggotaanDHSI"
@@ -322,6 +348,7 @@ export type $KeanggotaanDHSIPayload<ExtArgs extends runtime.Types.Extensions.Int
     id: string
     nama_lengkap: string
     role: string
+    kategori: string
     upload_foto_formal: string
   }, ExtArgs["result"]["keanggotaanDHSI"]>
   composites: {}
@@ -749,6 +776,7 @@ export interface KeanggotaanDHSIFieldRefs {
   readonly id: Prisma.FieldRef<"KeanggotaanDHSI", 'String'>
   readonly nama_lengkap: Prisma.FieldRef<"KeanggotaanDHSI", 'String'>
   readonly role: Prisma.FieldRef<"KeanggotaanDHSI", 'String'>
+  readonly kategori: Prisma.FieldRef<"KeanggotaanDHSI", 'String'>
   readonly upload_foto_formal: Prisma.FieldRef<"KeanggotaanDHSI", 'String'>
 }
     

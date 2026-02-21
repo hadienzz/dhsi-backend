@@ -26,7 +26,7 @@ const create = async (
   next: NextFunction,
 ) => {
   try {
-    const { nama_lengkap, role } = req.body;
+    const { nama_lengkap, role, kategori } = req.body;
 
     const files = req.files as
       | { [fieldname: string]: Express.Multer.File[] }
@@ -50,6 +50,7 @@ const create = async (
     const data = await keanggotaanService.create({
       nama_lengkap,
       role,
+      kategori: kategori || "Direksi",
       upload_foto_formal,
     });
 
@@ -70,7 +71,7 @@ const update = async (
 ) => {
   try {
     const id = req.params.id as string;
-    const { nama_lengkap, role } = req.body;
+    const { nama_lengkap, role, kategori } = req.body;
 
     const files = req.files as
       | { [fieldname: string]: Express.Multer.File[] }
@@ -80,11 +81,13 @@ const update = async (
     const updateData: {
       nama_lengkap?: string;
       role?: string;
+      kategori?: string;
       upload_foto_formal?: string;
     } = {};
 
     if (nama_lengkap) updateData.nama_lengkap = nama_lengkap;
     if (role) updateData.role = role;
+    if (kategori) updateData.kategori = kategori;
 
     if (fotoFile) {
       const { url } = await uploadToSupabase(fotoFile, "profile");

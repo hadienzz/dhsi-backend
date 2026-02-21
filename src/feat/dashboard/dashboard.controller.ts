@@ -20,6 +20,7 @@ const createWorkshop = async (
       title,
       benefits,
       description,
+      start_date,
       price,
       credit_price,
     } = req.body as z.infer<typeof createWorkshopSchema>;
@@ -37,6 +38,7 @@ const createWorkshop = async (
       thumbnail: "",
       benefits,
       description,
+      start_date: start_date ? new Date(start_date) : null,
       price,
       credit_price,
       user_id,
